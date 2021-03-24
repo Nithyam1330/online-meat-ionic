@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +9,11 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
-
+  constructor(private modalController: ModalController) {}
+  async openLoginModal() {
+    const modalRef = await this.modalController.create({
+      component: LoginComponent
+    })
+    await modalRef.present();
+  }
 }

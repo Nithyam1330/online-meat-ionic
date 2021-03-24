@@ -8,6 +8,9 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -18,6 +21,6 @@ import { LoginComponent } from './login/login.component';
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule,
   ],
-  declarations: [Tab3Page, LoginComponent]
+  declarations: [Tab3Page, LoginComponent, RegisterComponent, ForgotPasswordComponent, ResetPasswordComponent]
 })
 export class Tab3PageModule {}

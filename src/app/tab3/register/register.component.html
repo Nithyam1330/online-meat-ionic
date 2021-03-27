@@ -17,8 +17,8 @@
               <ion-input formControlName="username" type="text" placeholder="Enter email"></ion-input>
             </ion-item>
             <ion-text color="danger" class="f14"
-            *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched">
-            {{ getErrorMessage(registerForm, validationMessages, 'username', 'username') }}
+            *ngIf="isValidField(registerForm, 'username')">
+            {{ getErrorMessage(registerForm, validationMessages, 'username') }}
           </ion-text>
           </div>
 

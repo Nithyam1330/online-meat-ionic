@@ -16,8 +16,8 @@
             <ion-input formControlName="username" type="text" placeholder="Enter email"></ion-input>
           </ion-item>
           <ion-text color="danger" class="f14"
-          *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched">
-          {{ getErrorMessage(loginForm, validationMessages, 'username', 'username') }}
+          *ngIf="isValidField(ForgetPasswordForm, 'username')">
+          {{ getErrorMessage(loginForm, validationMessages, 'username') }}
         </ion-text>
         </div>
 
@@ -27,8 +27,8 @@
             <ion-input formControlName="password" type="password" placeholder="Enter Password"></ion-input>
           </ion-item>
           <ion-text color="danger" class="f14"
-          *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
-          {{ getErrorMessage(loginForm, validationMessages, 'password', 'password') }}
+          *ngIf="isValidField(ForgetPasswordForm, 'password')">
+          {{ getErrorMessage(loginForm, validationMessages, 'password') }}
         </ion-text>
         </div>
 

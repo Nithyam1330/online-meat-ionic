@@ -10,19 +10,26 @@
         <ion-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-        <div class="h-px-75">
+        <div class="h-px-90">
           <ion-item>
             <ion-label position="floating">Username</ion-label>
             <ion-input formControlName="username" type="text" placeholder="Enter email"></ion-input>
           </ion-item>
-          <p class="error">Please enter data</p>
+          <ion-text color="danger" class="f14"
+          *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched">
+          {{ getErrorMessage(loginForm, validationMessages, 'username', 'username') }}
+        </ion-text>
         </div>
 
-        <div class="h-px-75">
+        <div class="h-px-90">
           <ion-item>
             <ion-label position="floating">Password</ion-label>
             <ion-input formControlName="password" type="password" placeholder="Enter Password"></ion-input>
           </ion-item>
+          <ion-text color="danger" class="f14"
+          *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+          {{ getErrorMessage(loginForm, validationMessages, 'password', 'password') }}
+        </ion-text>
         </div>
 
         <div class="ion-text-end">

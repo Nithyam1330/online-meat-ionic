@@ -1,9 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
+export interface IToasterService {
+  message:string,
+  duration:number,
+  color:string,
+  position:string
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class ToasterService {
   constructor(private _toastController: ToastController) { }
 

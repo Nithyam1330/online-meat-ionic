@@ -15,8 +15,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 export class Tab3Page {
   constructor(
     private modalController: ModalController,
-    private _loader: LoaderService,
-    private _toaster:ToasterService
+    private loader: LoaderService,
+    private toaster:ToasterService
   ) {}
   async openLoginModal() {
     const modalRef = await this.modalController.create({
@@ -44,10 +44,10 @@ export class Tab3Page {
   }
 
   openLoader() {
-    this._loader.showLoader();
+    this.loader.showLoader();
   }
 
   openToaster() {
-    this._toaster.presentToast(`1 KG Mutton.`,'medium')
+    this.toaster.presentToast(`1 KG Mutton.`,'medium')
   }
 }

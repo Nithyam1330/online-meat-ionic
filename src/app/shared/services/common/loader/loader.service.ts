@@ -2,6 +2,19 @@ import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { SPINNER_TYPE } from './spinner-enums';
 
+
+export interface ILoaderService{
+  messageValue: string
+    spinnerType:string
+    keyboardCloseValue:string
+    spinnerTime :number
+    translucentValue:boolean,
+    cssClassValue:string
+    isAnimated:boolean,
+    isBackDropDismiss:boolean,
+    enableBackdropShadow :boolean
+}
+
 @Injectable({
   providedIn: 'root',
 })

@@ -18,7 +18,6 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     IonicModule,
     CommonModule,SharedModule,
-    FormsModule,ReactiveFormsModule,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule

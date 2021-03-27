@@ -1,53 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProviderTypes } from 'src/app/shared/constants/registration-constants';
 import { RequestEnums } from 'src/app/shared/constants/request-enums';
+import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
+import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
+import { Roles } from '../../shared/constants/registration-constants';
+
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent  extends BaseClass implements OnInit {
   registerForm: FormGroup;
- 
+
   validationMessages = {
-    username: [
-      {type: 'required', message: 'Please enter Email'},
-      {type: 'pattern', message: 'Please enter Valid Email'}
+    username:[
+      { type: "required", message: "Please enter your  Email Address" },
+      { type: "pattern", message: "Please enter your valid Email Address" },
     ],
   };
- 
+
   constructor(private formBuilder: FormBuilder,
-    private commonRequestService: CommonRequestService) { }
+    private commonRequestService: CommonRequestService) {
+      super();
+    }
 
   ngOnInit() {
     this.initRegistration();
   }
+
   initRegistration() {
     this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")]],
-      provider:['EMAIL'],
-      role: ['USER'],
+      username: ['',Validators.compose([
+        Validators.required,
+        Validators.pattern(VALIDATION_PATTERNS.EMAIL),
+      ])],
+      provider:[ProviderTypes.EMAIL],
+      role: [Roles.USER],
     });
   }
+
   onSubmit() {
     console.log("hello");
     const username = this.registerForm.get('username').value;
-   // const provider="EMAIL";
-   // const role="EMAIL";
     console.log("registration form:" + JSON.stringify(this.registerForm.value));
     this.commonRequestService.request(RequestEnums.REGISTER, this.registerForm.value).subscribe(
       (res: any) => {
         if (res.statusCode === 200) {
-          alert('user registered Successfully'); 
-        } 
+          alert('user registered Successfully');
+        }
         else {
           alert("email already exists");
-        }   
+        }
       },
     )
   }
 }
-      
+
 

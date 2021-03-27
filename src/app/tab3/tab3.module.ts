@@ -1,6 +1,6 @@
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
@@ -21,8 +21,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,ReactiveFormsModule,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
-    Tab3PageRoutingModule,
+    Tab3PageRoutingModule
   ],
-  declarations: [Tab3Page, LoginComponent, RegisterComponent, ForgotPasswordComponent, ResetPasswordComponent]
+  declarations: [Tab3Page, LoginComponent, RegisterComponent, ForgotPasswordComponent, ResetPasswordComponent],
 })
 export class Tab3PageModule {}

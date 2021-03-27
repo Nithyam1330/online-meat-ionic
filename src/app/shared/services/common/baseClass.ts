@@ -1,8 +1,6 @@
-import { AppLoaderService } from './../../components/componentsAsService/app-loader/app-loader.service';
+
 import { Injectable, Injector, OnInit } from '@angular/core';
 import Utils from './utils';
-import { GlobalVariables } from './globalVariables';
-import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 
 @Injectable()

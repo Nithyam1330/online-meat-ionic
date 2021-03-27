@@ -34,7 +34,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  
+
   @keyframes blinker {
     25% {
       opacity: 0;
@@ -93,6 +93,9 @@ p.error {
 
 .h-px-75 {
     height: 75px !important;
+}
+.h-px-90 {
+  height: 90px !important;
 }
 
 
@@ -553,7 +556,7 @@ p.error {
 
 .m-t-100 {
     margin-top: 100px !important;
-   
+
 }
 
 .m-b-0 {

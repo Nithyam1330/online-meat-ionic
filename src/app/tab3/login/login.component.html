@@ -27,7 +27,7 @@
             <ion-input formControlName="password" type="password" placeholder="Enter Password"></ion-input>
           </ion-item>
           <ion-text color="danger" class="f14"
-          *ngIf="isValidField(ForgetPasswordForm, 'password')">
+          *ngIf="isValidField(loginForm, 'password')">
           {{ getErrorMessage(loginForm, validationMessages, 'password') }}
         </ion-text>
         </div>

@@ -20,6 +20,12 @@ export const RequestEnums = {
         path: '/user/forgot-password',
         keys: [],
         values: [],
-    }
+    },
+    SAVE_PROFILE:{
+      type: 'POST',
+      path: '/user-details',
+      keys: [],
+      values: [],
+  }
 };
 

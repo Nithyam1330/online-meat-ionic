@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
+import { RequestEnums } from '../../../../../shared/constants/request-enums';
+import Utils from '../../../../../shared/services/common/utils';
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +14,7 @@ import { CommonRequestService } from 'src/app/shared/services/http/common-reques
 export class ProfileComponent  extends BaseClass implements OnInit{
 
   profileForm: FormGroup;
+  genderListData = [];
 
   validationMessages = {
     firstName:[
@@ -36,6 +39,13 @@ export class ProfileComponent  extends BaseClass implements OnInit{
     }
 
   ngOnInit() {
+    this.commonRequestService.request(RequestEnums.GET_GENDER_TYPES).subscribe(response=>{
+      if(Utils.isValidInput(response.data)){
+        this.genderListData = response.data;
+        console.log(this.genderListData)
+      }
+
+    })
     this.initializeProfile();
   }
 
@@ -61,7 +71,10 @@ export class ProfileComponent  extends BaseClass implements OnInit{
   }
 
   onSubmit(){
-    console.log(this.profileForm.value)
+    console.log(this.profileForm.value);
+    this.commonRequestService.request(RequestEnums.SAVE_PROFILE,this.profileForm.value).subscribe(response =>{
+      console.log(response);
+    })
 
   }
 

@@ -16,7 +16,7 @@
             <ion-input formControlName="username" type="text" placeholder="Enter email"></ion-input>
           </ion-item>
           <ion-text color="danger" class="f14"
-          *ngIf="isValidField(ForgetPasswordForm, 'username')">
+          *ngIf="isValidField(loginForm, 'username')">
           {{ getErrorMessage(loginForm, validationMessages, 'username') }}
         </ion-text>
         </div>

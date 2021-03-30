@@ -14,6 +14,15 @@ import { LOCAL_STORAGE_ENUMS } from '../app-properties';
 })
 export class LoginComponent  extends BaseClass implements OnInit {
   loginForm: FormGroup;
+
+  validationMessages = {
+    username: [
+      { type: 'required', message: 'Please enter your  Email Address' },
+      { type: 'pattern', message: 'Please enter your valid Email Address' },
+    ],
+    password: [{ type: 'required', message: 'Please enter password' }],
+  };
+  
   constructor(private formBuilder: FormBuilder, private StorageService:StorageService,
     private commonRequestService: CommonRequestService) {
       super();

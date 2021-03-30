@@ -17,7 +17,6 @@ export class ForgotPasswordComponent extends BaseClass implements OnInit {
       super();
     }
 
-
     validationMessages = {
       username:[
         { type: "required", message: "Please enter your  Email Address" },
@@ -40,8 +39,6 @@ export class ForgotPasswordComponent extends BaseClass implements OnInit {
 
   onSubmit() {
     const username = this.ForgetPasswordForm.get('username').value;
-
-    console.log(" form:" + JSON.stringify(this.ForgetPasswordForm.value));
     this.commonRequestService.request(RequestEnums.FORGOT_PASSWORD, this.ForgetPasswordForm.value).subscribe(
       (res: any) => {
         if (res.statusCode === 200) {

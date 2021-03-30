@@ -20,6 +20,7 @@ export const RequestEnums = {
         path: '/user/forgot-password',
         keys: [],
         values: [],
-    }
+    },
+   
 };
 

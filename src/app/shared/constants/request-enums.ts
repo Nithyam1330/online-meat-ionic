@@ -19,8 +19,8 @@ export const RequestEnums = {
   },
   SAVE_PROFILE: {
     type: 'POST',
-    path: '/user-details',
-    keys: [],
+    path: '/user-details/:id',
+    keys: ['id'],
     values: [],
   },
   GET_GENDER_TYPES: {

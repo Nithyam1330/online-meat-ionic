@@ -53,11 +53,11 @@
               </ion-select>
             </ion-item>
             <ion-text color="danger" class="f14"   *ngIf="isValidField(profileForm, 'gender_id')">
-            {{ getErrorMessage(profileForm, validationMessages, 'gender') }}
+            {{ getErrorMessage(profileForm, validationMessages, 'gender_id') }}
           </ion-text>
           </div>
           <div class="ion-text-end">
-            <ion-button (click)="onSubmit()" color="light" size="small" fill="outline" shape="round">Submit
+            <ion-button (click)="onSubmit()" color="light" size="small" fill="outline" shape="round" [disabled]='!profileForm.valid'>Submit
               <ion-icon class="p-l-10" name="arrow-forward-circle"></ion-icon>
             </ion-button>
           </div>

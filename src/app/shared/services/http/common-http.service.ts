@@ -94,11 +94,12 @@ export class CommonHttpService {
             console.log('Server Error. Please check the error from server side');
         }
         // get's error message from errors.json.ts
+
         let errorMessage = errors['default'].message;
         if (errors.hasOwnProperty(error.status)) {
             errorMessage = errors[error.status].message;
         }
-        return throwError(errorMessage);
+        return throwError(error);
     }
 
     // To execute any Http service request

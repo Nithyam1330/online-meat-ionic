@@ -22,7 +22,7 @@ export class ToasterService {
       message: message,
       duration: 4000,
       color: color,
-      position: 'bottom'
+      position: 'top'
     });
     toast.present();
   }

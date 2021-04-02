@@ -5,6 +5,9 @@ export const errors = {
     0: {
         message: 'Unknown Error'
     },
+    401:{
+      message: '"Unauthorized"'
+    },
     'default': {
         message: 'Something went wrong. Unable to find the issue'
     }

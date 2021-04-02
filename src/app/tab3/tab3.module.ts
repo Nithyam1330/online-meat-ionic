@@ -17,11 +17,12 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   imports: [
     IonicModule,
-    CommonModule,SharedModule,
+    CommonModule,
+    SharedModule,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }]),
     Tab3PageRoutingModule
   ],
-  declarations: [Tab3Page, LoginComponent, RegisterComponent, ForgotPasswordComponent, ResetPasswordComponent],
+  declarations: [Tab3Page],
 })
 export class Tab3PageModule {}

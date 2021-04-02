@@ -1,13 +1,9 @@
-import { HttpHeaders } from '@angular/common/http';
 export const RequestEnums = {
   REGISTER: {
     type: 'POST',
     path: '/user/register',
     keys: [],
     values: [],
-    // header: new HttpHeaders({
-    //      "Content-Type": "application/json"
-    // })
   },
   LOGIN: {
     type: 'POST',
@@ -33,4 +29,10 @@ export const RequestEnums = {
     keys: [],
     values: [],
   },
+ RESET_PASSWORD:{
+        type: 'PUT',
+        path: '/user/reset-password/:id',
+        keys: ['id'],
+        values: [],
+    }
 };

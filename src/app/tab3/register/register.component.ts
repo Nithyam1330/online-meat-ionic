@@ -49,6 +49,7 @@ export class RegisterComponent  extends BaseClass implements OnInit {
       (res: any) => {
         if (res.statusCode === 200) {
           alert('user registered Successfully');
+          alert(res.data.password);
         }
         else {
           alert("email already exists");

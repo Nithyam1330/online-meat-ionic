@@ -29,10 +29,16 @@ export const RequestEnums = {
     keys: [],
     values: [],
   },
- RESET_PASSWORD:{
-        type: 'PUT',
-        path: '/user/reset-password/:id',
-        keys: ['id'],
-        values: [],
-    }
+  RESET_PASSWORD: {
+    type: 'PUT',
+    path: '/user/reset-password/:id',
+    keys: ['id'],
+    values: [],
+  },
+  GET_USER_PROFILE_DATA: {
+    type: 'GET',
+    path: '/user-details/:id',
+    keys: ['id'],
+    values: [],
+  },
 };

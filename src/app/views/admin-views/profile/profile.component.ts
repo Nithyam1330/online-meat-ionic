@@ -45,6 +45,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
 
   ngOnInit() {
     this.getAllGenders();
+    this.getProfileData();
     this.initializeProfile();
   }
 
@@ -108,5 +109,19 @@ export class ProfileComponent extends BaseClass implements OnInit {
           }
         }
       );
+  }
+
+  getProfileData(){
+    this.loader.showLoader();
+    RequestEnums.GET_USER_PROFILE_DATA.values = [ this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID)];
+    this.commonRequestService.request(RequestEnums.GET_USER_PROFILE_DATA).subscribe(Response =>{
+      console.log(Response);
+      this.loader.dissmissLoading();
+      if(Utils.isValidInput(Response.data)){
+        this.profileForm.patchValue(Response.data[0])
+      }
+    },error =>{
+      this.loader.dissmissLoading();
+    })
   }
 }

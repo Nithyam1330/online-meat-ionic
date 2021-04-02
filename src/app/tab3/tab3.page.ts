@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -16,7 +17,8 @@ export class Tab3Page {
   constructor(
     private modalController: ModalController,
     private loader: LoaderService,
-    private toaster:ToasterService
+    private toaster:ToasterService,
+    private router:Router
   ) {}
   async openLoginModal() {
     const modalRef = await this.modalController.create({
@@ -41,6 +43,10 @@ export class Tab3Page {
       component: RegisterComponent,
     });
     await modalRef.present();
+  }
+
+  async profile(){
+    this.router.navigate(["/profile"]);
   }
 
   openLoader() {

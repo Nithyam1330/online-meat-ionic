@@ -44,13 +44,12 @@ export class RegisterComponent  extends BaseClass implements OnInit {
   }
 
   onSubmit() {
-    console.log("hello");
     const username = this.registerForm.get('username').value;
-    console.log("registration form:" + JSON.stringify(this.registerForm.value));
     this.commonRequestService.request(RequestEnums.REGISTER, this.registerForm.value).subscribe(
       (res: any) => {
         if (res.statusCode === 200) {
           alert('user registered Successfully');
+          alert(res.data.password);
         }
         else {
           alert("email already exists");

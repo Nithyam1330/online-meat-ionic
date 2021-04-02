@@ -47,6 +47,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.commonRequestService.request(RequestEnums.GET_GENDER_TYPES).subscribe(response => {
       if (Utils.isValidInput(response.data)) {
         this.genderListData = response.data;
+        console.log(this.genderListData);
       }
 
     })

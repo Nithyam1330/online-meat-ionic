@@ -1,4 +1,4 @@
-import { FormControl, AbstractControl } from '@angular/forms';
+import { FormControl, AbstractControl, FormGroup } from '@angular/forms';
 import Utils from './utils';
 
 export class CustomValidators {
@@ -69,4 +69,11 @@ export class CustomValidators {
     const isValid = !isWhitespace;
     return isValid ? null : { 'whitespace': true };
   }
+  
+  static checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+const newPassword = group.get('newPassword').value;
+const confirmPassword = group.get('confirmPassword').value;
+
+return newPassword === confirmPassword ? null : { notSame: true }
+}
 }

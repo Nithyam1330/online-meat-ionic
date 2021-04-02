@@ -41,4 +41,11 @@ export const RequestEnums = {
     keys: ['id'],
     values: [],
   },
+  UPDATE_USER_PROFILE_DATA: {
+    type: 'PUT',
+    path: '/user-details/:id',
+    keys: ['id'],
+    values: [],
+  },
+
 };

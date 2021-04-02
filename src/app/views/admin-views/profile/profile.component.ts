@@ -32,6 +32,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
     ],
     gender_id: [{ type: 'required', message: 'Please select Gender' }],
   };
+  isUpdate: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -91,37 +92,71 @@ export class ProfileComponent extends BaseClass implements OnInit {
   onSubmit() {
     console.log(this.profileForm.value);
     this.loader.showLoader();
-    RequestEnums.SAVE_PROFILE.values = [
+    if (this.isUpdate) {
+      RequestEnums.UPDATE_USER_PROFILE_DATA.values = [
+        this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
+      ];
+      this.commonRequestService
+        .request(RequestEnums.UPDATE_USER_PROFILE_DATA, this.profileForm.value)
+        .subscribe(
+          (response) => {
+            if (Utils.isValidInput(response)) {
+              this.loader.dissmissLoading();
+              this.toaster.presentToast(response.message,'success');
+            }
+          },
+          (error) => {
+            if (error) {
+              this.loader.dissmissLoading();
+              this.toaster.presentToast(error.error.message, 'danger');
+            }
+          }
+        );
+    } else {
+      RequestEnums.SAVE_PROFILE.values = [
+        this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
+      ];
+      this.commonRequestService
+        .request(RequestEnums.SAVE_PROFILE, this.profileForm.value)
+        .subscribe(
+          (response) => {
+            if (Utils.isValidInput(response)) {
+              this.loader.dissmissLoading();
+              this.toaster.presentToast(response.message,'success');
+            }
+          },
+          (error) => {
+            if (error) {
+              this.loader.dissmissLoading();
+              this.toaster.presentToast(error.error.message, 'danger');
+            }
+          }
+        );
+    }
+  }
+
+  getProfileData() {
+    this.loader.showLoader();
+    RequestEnums.GET_USER_PROFILE_DATA.values = [
       this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
     ];
     this.commonRequestService
-      .request(RequestEnums.SAVE_PROFILE, this.profileForm.value)
+      .request(RequestEnums.GET_USER_PROFILE_DATA)
       .subscribe(
-        (response) => {
-          if (Utils.isValidInput(response)) {
-            this.loader.dissmissLoading();
+        (Response) => {
+          console.log(Response);
+          this.loader.dissmissLoading();
+          if (Utils.isValidInput(Response.data)) {
+            this.profileForm.patchValue(Response.data[0]);
+            if (Response.data[0].updatedAt !== '' || null) {
+              this.isUpdate = true;
+            }
           }
         },
         (error) => {
-          if (error) {
-            this.loader.dissmissLoading();
-            this.toaster.presentToast(error.error.message, 'danger');
-          }
+          console.log(error);
+          this.loader.dissmissLoading();
         }
       );
-  }
-
-  getProfileData(){
-    this.loader.showLoader();
-    RequestEnums.GET_USER_PROFILE_DATA.values = [ this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID)];
-    this.commonRequestService.request(RequestEnums.GET_USER_PROFILE_DATA).subscribe(Response =>{
-      console.log(Response);
-      this.loader.dissmissLoading();
-      if(Utils.isValidInput(Response.data)){
-        this.profileForm.patchValue(Response.data[0])
-      }
-    },error =>{
-      this.loader.dissmissLoading();
-    })
   }
 }

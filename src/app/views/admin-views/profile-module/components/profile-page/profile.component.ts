@@ -11,17 +11,17 @@ import Utils from '../../../../../shared/services/common/utils';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent  extends BaseClass implements OnInit{
+export class ProfileComponent extends BaseClass implements OnInit {
 
   profileForm: FormGroup;
   genderListData = [];
 
   validationMessages = {
-    firstName:[
+    firstName: [
       { type: "required", message: "Please enter your  FirstName" },
       { type: "pattern", message: "Allowed Only Alphabets" },
     ],
-    lastName:[
+    lastName: [
       { type: "required", message: "Please enter your  LasttName" },
       { type: "pattern", message: "Allowed Only Alphabets" },
     ],
@@ -35,44 +35,47 @@ export class ProfileComponent  extends BaseClass implements OnInit{
 
   constructor(private formBuilder: FormBuilder,
     private commonRequestService: CommonRequestService) {
-      super();
-    }
+    super();
+  }
 
   ngOnInit() {
-    this.commonRequestService.request(RequestEnums.GET_GENDER_TYPES).subscribe(response=>{
-      if(Utils.isValidInput(response.data)){
+    this.getAllGenders();
+    this.initializeProfile();
+  }
+
+  getAllGenders() {
+    this.commonRequestService.request(RequestEnums.GET_GENDER_TYPES).subscribe(response => {
+      if (Utils.isValidInput(response.data)) {
         this.genderListData = response.data;
-        console.log(this.genderListData)
       }
 
     })
-    this.initializeProfile();
   }
 
   initializeProfile() {
     this.profileForm = this.formBuilder.group({
-      firstName: ['',Validators.compose([
+      firstName: ['', Validators.compose([
         Validators.required,
         Validators.pattern(VALIDATION_PATTERNS.NAME),
       ])],
-      lastName: ['',Validators.compose([
+      lastName: ['', Validators.compose([
         Validators.required,
         Validators.pattern(VALIDATION_PATTERNS.NAME),
       ])],
-      phoneNumber: ['',Validators.compose([
+      phoneNumber: ['', Validators.compose([
         Validators.required,
         Validators.pattern(VALIDATION_PATTERNS.PHONE),
       ])],
-      gender_id: ['',Validators.compose([
+      gender_id: ['', Validators.compose([
         Validators.required
       ])],
       profilePicture: [''],
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.profileForm.value);
-    this.commonRequestService.request(RequestEnums.SAVE_PROFILE,this.profileForm.value).subscribe(response =>{
+    this.commonRequestService.request(RequestEnums.SAVE_PROFILE, this.profileForm.value).subscribe(response => {
       console.log(response);
     })
 

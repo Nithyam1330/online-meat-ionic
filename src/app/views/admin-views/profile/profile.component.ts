@@ -56,7 +56,6 @@ export class ProfileComponent extends BaseClass implements OnInit {
       .subscribe((response) => {
         if (Utils.isValidInput(response.data)) {
           this.genderListData = response.data;
-          console.log(this.genderListData);
         }
       });
   }
@@ -90,7 +89,6 @@ export class ProfileComponent extends BaseClass implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.profileForm.value);
     this.loader.showLoader();
     if (this.isUpdate) {
       RequestEnums.UPDATE_USER_PROFILE_DATA.values = [
@@ -144,7 +142,6 @@ export class ProfileComponent extends BaseClass implements OnInit {
       .request(RequestEnums.GET_USER_PROFILE_DATA)
       .subscribe(
         (Response) => {
-          console.log(Response);
           this.loader.dissmissLoading();
           if (Utils.isValidInput(Response.data)) {
             this.profileForm.patchValue(Response.data[0]);
@@ -154,8 +151,8 @@ export class ProfileComponent extends BaseClass implements OnInit {
           }
         },
         (error) => {
-          console.log(error);
-          this.loader.dissmissLoading();
+          if(error)this.loader.dissmissLoading();
+
         }
       );
   }

@@ -21,7 +21,7 @@ export const RequestEnums = {
         keys: [],
         values: [],
     },
-    RESET_PASSWORD:{
+ RESET_PASSWORD:{
         type: 'PUT',
         path: '/user/reset-password/:id',
         keys: ['id'],

@@ -6,6 +6,7 @@ import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-pattern
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
+import { LOCAL_STORAGE_ENUMS } from '../app-properties';
 
 
 @Component({

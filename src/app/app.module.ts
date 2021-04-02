@@ -8,21 +8,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { HeaderInterceptorsService } from './shared/services/http/header-interceptors.service';
+import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
+import { TabsComponent } from './shared/components/layouts/tabs/tabs.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    AuthLayoutComponent,
+    AdminLayoutComponent,
+    TabsComponent
+  ],
   entryComponents: [],
   imports: [
-    BrowserModule,HttpClientModule,
+    BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorsService, multi: true }
-  
-],
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

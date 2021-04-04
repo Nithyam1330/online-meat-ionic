@@ -19,8 +19,8 @@ export const RequestEnums = {
   },
   SAVE_PROFILE: {
     type: 'POST',
-    path: '/user-details',
-    keys: [],
+    path: '/user-details/:id',
+    keys: ['id'],
     values: [],
   },
   GET_GENDER_TYPES: {
@@ -29,10 +29,23 @@ export const RequestEnums = {
     keys: [],
     values: [],
   },
- RESET_PASSWORD:{
-        type: 'PUT',
-        path: '/user/reset-password/:id',
-        keys: ['id'],
-        values: [],
-    }
+  RESET_PASSWORD: {
+    type: 'PUT',
+    path: '/user/reset-password/:id',
+    keys: ['id'],
+    values: [],
+  },
+  GET_USER_PROFILE_DATA: {
+    type: 'GET',
+    path: '/user-details/:id',
+    keys: ['id'],
+    values: [],
+  },
+  UPDATE_USER_PROFILE_DATA: {
+    type: 'PUT',
+    path: '/user-details/:id',
+    keys: ['id'],
+    values: [],
+  },
+
 };

@@ -6,6 +6,11 @@ import { TabsComponent } from './shared/components/layouts/tabs/tabs.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
     path: 'tabs',
     component: TabsComponent,
     children: [
@@ -54,12 +59,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/admin-views/profile/profile.module').then(m => m.ProfileModule)
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  },
+  }
 ];
 @NgModule({
   imports: [

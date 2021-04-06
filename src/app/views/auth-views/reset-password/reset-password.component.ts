@@ -6,6 +6,8 @@ import { StorageService } from 'src/app/shared/services/common/storage/storage.s
 import { LOCAL_STORAGE_ENUMS } from 'src/app/shared/constants/local-storage.enums';
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { CustomValidators } from 'src/app/shared/services/common/validators';
+import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
+import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -27,35 +29,45 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
     ],
   };
 
-  constructor(private formBuilder: FormBuilder, 
+  constructor(private formBuilder: FormBuilder,
     private StorageService: StorageService,
-    private commonRequestService: CommonRequestService) {
+    private commonRequestService: CommonRequestService,
+    private loaderService: LoaderService,
+    private toastService: ToasterService) {
     super();
-    
+
   }
   ngOnInit() {
     this.initResetForm();
   }
-  initResetForm(){
+  initResetForm() {
     this.ResetForm = this.formBuilder.group({
       oldPassword: ['', Validators.compose([Validators.required])],
       newPassword: ['', Validators.compose([Validators.required])],
       confirmPassword: ['', Validators.compose([Validators.required])]
     },
-    {
-      validators:CustomValidators.checkPasswords
-    }
+      {
+        validators: CustomValidators.checkPasswords
+      }
     );
   }
   onSubmit() {
-    RequestEnums.RESET_PASSWORD.values = [this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID)]  
+    this.loaderService.showLoader();
+    RequestEnums.RESET_PASSWORD.values = [this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID)]
     this.commonRequestService.request(RequestEnums.RESET_PASSWORD, this.ResetForm.value).subscribe(
       (res: any) => {
+        this.loaderService.dissmissLoading();
         if (res.statusCode === 200) {
-          alert('Password has been changed Successfully');
+          this.toastService.presentToast({
+            message: 'Password has been changed Successfully',
+            color: TOAST_COLOR_ENUMS.SUCCESS
+          })
         }
         else {
-          alert("Invalid");
+          this.toastService.presentToast({
+            message: 'Error',
+            color: TOAST_COLOR_ENUMS.DANGER
+          })
         }
       });
   }

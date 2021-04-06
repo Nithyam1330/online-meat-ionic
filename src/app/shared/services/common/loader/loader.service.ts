@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import Utils from '../utils';
 import { SPINNER_TYPE } from './spinner-enums';
 
 
@@ -19,6 +20,7 @@ export interface ILoaderService{
   providedIn: 'root',
 })
 export class LoaderService {
+  loadingRef;
   constructor(public loadingController: LoadingController) {}
 
   async showLoader(
@@ -32,7 +34,10 @@ export class LoaderService {
     isBackDropDismiss = false,
     enableBackdropShadow = true
   ) {
-    const loading = await this.loadingController.create({
+    if (Utils.isValidInput(this.loadingRef)) {
+      return;
+    }
+    this.loadingRef = await this.loadingController.create({
       message: messageValue,
       spinner: spinnerType,
       duration: spinnerTime,
@@ -43,10 +48,14 @@ export class LoaderService {
       backdropDismiss: isBackDropDismiss,
       showBackdrop: enableBackdropShadow,
     });
-    await loading.present();
+    await this.loadingRef.present();
   }
 
   async dissmissLoading() {
-    await this.loadingController.dismiss();
+    if (Utils.isValidInput(this.loadingRef)) {
+      await this.loadingRef.dismiss();
+      this.loadingRef = null;
+    }
+    return;
   }
 }

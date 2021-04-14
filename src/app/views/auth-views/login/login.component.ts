@@ -72,7 +72,7 @@ export class LoginComponent extends BaseClass implements OnInit {
         else {
           this.toasterService.presentToast({
             message: 'Invalid credentials',
-            color: TOAST_COLOR_ENUMS.SUCCESS
+            color: TOAST_COLOR_ENUMS.DANGER
           });
         }
       },

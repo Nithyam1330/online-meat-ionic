@@ -7,7 +7,10 @@ import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
 import { LOCAL_STORAGE_ENUMS } from 'src/app/shared/constants/local-storage.enums';
-import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
+import {
+  ToasterService,
+  TOAST_COLOR_ENUMS,
+} from 'src/app/shared/services/common/toaster/toaster.service';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 @Component({
   selector: 'app-profile',
@@ -50,17 +53,23 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.initializeProfile();
   }
 
-  getAllGenders() {
-    this.commonRequestService
-      .request(RequestEnums.GET_GENDER_TYPES)
-      .subscribe((response) => {
+  /** fetch Gender List */
+  private async getAllGenders() {
+    await this.loaderService.showLoader();
+    this.commonRequestService.request(RequestEnums.GET_GENDER_TYPES).subscribe(
+      (response) => {
+        this.loaderService.dissmissLoading();
         if (Utils.isValidInput(response.data)) {
           this.genderListData = response.data;
         }
-      });
+      },
+      (error) => {
+        if (error) this.loaderService.dissmissLoading();
+      }
+    );
   }
 
-  initializeProfile() {
+  private initializeProfile() {
     this.profileForm = this.formBuilder.group({
       firstName: [
         '',
@@ -89,64 +98,16 @@ export class ProfileComponent extends BaseClass implements OnInit {
   }
 
   onSubmit() {
-    this.loaderService.showLoader();
     if (this.isUpdate) {
-      RequestEnums.UPDATE_USER_PROFILE_DATA.values = [
-        this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
-      ];
-      this.commonRequestService
-        .request(RequestEnums.UPDATE_USER_PROFILE_DATA, this.profileForm.value)
-        .subscribe(
-          (response) => {
-            if (Utils.isValidInput(response)) {
-              this.loaderService.dissmissLoading();
-              this.toasterService.presentToast({
-                message: response.message,
-                color: TOAST_COLOR_ENUMS.SUCCESS
-              });
-            }
-          },
-          (error) => {
-            if (error) {
-              this.loaderService.dissmissLoading();
-              this.toasterService.presentToast({
-                message: error.error.message,
-                color: TOAST_COLOR_ENUMS.DANGER
-              });
-            }
-          }
-        );
+      this.updateProfile();
     } else {
-      RequestEnums.SAVE_PROFILE.values = [
-        this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
-      ];
-      this.commonRequestService
-        .request(RequestEnums.SAVE_PROFILE, this.profileForm.value)
-        .subscribe(
-          (response) => {
-            if (Utils.isValidInput(response)) {
-              this.loaderService.dissmissLoading();
-              this.toasterService.presentToast({
-                message: response.message,
-                color: TOAST_COLOR_ENUMS.SUCCESS
-              });
-            }
-          },
-          (error) => {
-            if (error) {
-              this.loaderService.dissmissLoading();
-              this.toasterService.presentToast({
-                message: error.error.message,
-                color: TOAST_COLOR_ENUMS.DANGER
-              });
-            }
-          }
-        );
+      this.createProfile();
     }
   }
 
-  getProfileData() {
-    this.loaderService.showLoader();
+  /* Fetch Existing Profile Data*/
+  private async getProfileData() {
+   await this.loaderService.showLoader();
     RequestEnums.GET_USER_PROFILE_DATA.values = [
       this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
     ];
@@ -163,8 +124,67 @@ export class ProfileComponent extends BaseClass implements OnInit {
           }
         },
         (error) => {
-          if(error)this.loaderService.dissmissLoading();
+          if (error) this.loaderService.dissmissLoading();
+        }
+      );
+  }
 
+  /*for Creating a new Profile */
+  private async createProfile() {
+    await this.loaderService.showLoader();
+    RequestEnums.SAVE_PROFILE.values = [
+      this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
+    ];
+    this.commonRequestService
+      .request(RequestEnums.SAVE_PROFILE, this.profileForm.value)
+      .subscribe(
+        (response) => {
+          if (Utils.isValidInput(response)) {
+            this.loaderService.dissmissLoading();
+            this.toasterService.presentToast({
+              message: response.message,
+              color: TOAST_COLOR_ENUMS.SUCCESS,
+            });
+          }
+        },
+        (error) => {
+          if (error) {
+            this.loaderService.dissmissLoading();
+            this.toasterService.presentToast({
+              message: error.error.message,
+              color: TOAST_COLOR_ENUMS.DANGER,
+            });
+          }
+        }
+      );
+  }
+
+  /*for Updating Existing Profile */
+  private async updateProfile() {
+   await this.loaderService.showLoader();
+    RequestEnums.UPDATE_USER_PROFILE_DATA.values = [
+      this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
+    ];
+    this.commonRequestService
+      .request(RequestEnums.UPDATE_USER_PROFILE_DATA, this.profileForm.value)
+      .subscribe(
+        (response) => {
+          if (Utils.isValidInput(response)) {
+            this.loaderService.dissmissLoading();
+            this.toasterService.presentToast({
+              message: response.message,
+              color: TOAST_COLOR_ENUMS.SUCCESS,
+            });
+          }
+        },
+        (error) => {
+          if (error) {
+            this.loaderService.dissmissLoading();
+            this.toasterService.presentToast({
+              message: error.error.message,
+              color: TOAST_COLOR_ENUMS.DANGER,
+            });
+          }
         }
       );
   }

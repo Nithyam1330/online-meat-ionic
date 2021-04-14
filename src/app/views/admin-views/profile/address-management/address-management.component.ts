@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { utils } from 'protractor';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ToasterService } from 'src/app/shared/services/common/toaster/toaster.service';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
@@ -14,7 +12,7 @@ import Utils from '../../../../shared/services/common/utils';
   styleUrls: ['./address-management.component.scss'],
 })
 export class AddressManagementComponent implements OnInit {
-  addressList;
+  addressList = [];
   constructor(
     private router: Router,
     private commonRequestService: CommonRequestService,
@@ -24,6 +22,10 @@ export class AddressManagementComponent implements OnInit {
 
   ngOnInit() {
     this.getAllAddress();
+  }
+
+  ionViewDidLoad() {
+    // this.getAllAddress();
   }
 
   /** Add||Modify Address */

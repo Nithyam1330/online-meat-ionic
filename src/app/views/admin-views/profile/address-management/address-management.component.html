@@ -1,23 +1,38 @@
 <ion-header>
 </ion-header>
 <ion-content>
-	<ion-card>
-		<h6 >Address List</h6>
-    <div (click)='addAddress()'>
-      <ion-icon  name='add'></ion-icon>
-    </div>
+	<!-- <ion-fab slot="bottom-end">
+		<ion-fab-button size="small">
+			<ion-icon slot="start" name="add-circle"></ion-icon>
+		</ion-fab-button>
+	  </ion-fab> -->
+	<ion-card *ngFor="let address of addressList">
+		<ion-card-header>
+			<ion-card-subtitle>Home</ion-card-subtitle>
+			<ion-card-title>Address</ion-card-title>
+		</ion-card-header>
 
-		<table style="width:100%">
-			<tr>
-				<th>S.No</th>
-				<th>Address Type</th>
-				<th>Action</th>
-			</tr>
-			<tr *ngFor="let item of addressList">
-				<td>{{item.type}}</td>
-				<td>{{item.pincode}}</td>
-				<td><ion-icon slot="start" name="eye"></ion-icon></td>
-			</tr>
-		</table>
+		<ion-card-content>
+			Street: {{address.street}}, Landmark: {{address.landmark}} , City: {{address.city}}, State:
+			{{address.state}}, pincode: {{address.pincode}}, Country: {{address.country}}
+		</ion-card-content>
+		<ion-card-footer>
+			<ion-grid >
+				<ion-row class="ion-justify-content-between">
+					<ion-col size="6">
+						<ion-button expand="block" fill="outline">
+							<ion-icon slot="start" name="pencil"></ion-icon>
+							Edit
+						</ion-button>
+					</ion-col>
+					<ion-col size="6">
+						<ion-button expand="block" fill="outline">
+							<ion-icon slot="start" name="trash"></ion-icon>Delete
+						</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+
+		</ion-card-footer>
 	</ion-card>
 </ion-content>

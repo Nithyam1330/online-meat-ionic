@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LOCAL_STORAGE_ENUMS } from 'src/app/shared/constants/local-storage.enums';
 import { RequestEnums } from 'src/app/shared/constants/request-enums';
 import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
+import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
+import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 
 
@@ -13,7 +16,7 @@ import { CommonRequestService } from 'src/app/shared/services/http/common-reques
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent  extends BaseClass implements OnInit {
+export class LoginComponent extends BaseClass implements OnInit {
   loginForm: FormGroup;
 
   validationMessages = {
@@ -23,11 +26,16 @@ export class LoginComponent  extends BaseClass implements OnInit {
     ],
     password: [{ type: 'required', message: 'Please enter password' }],
   };
-  
-  constructor(private formBuilder: FormBuilder, private StorageService:StorageService,
-    private commonRequestService: CommonRequestService) {
-      super();
-    }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private StorageService: StorageService,
+    private commonRequestService: CommonRequestService,
+    private loaderService: LoaderService,
+    private toasterService: ToasterService,
+    private router: Router) {
+    super();
+  }
 
   ngOnInit() {
     this.initLoginForm();
@@ -35,7 +43,7 @@ export class LoginComponent  extends BaseClass implements OnInit {
 
   initLoginForm() {
     this.loginForm = this.formBuilder.group({
-      username: ['',Validators.compose([
+      username: ['', Validators.compose([
         Validators.required,
         Validators.pattern(VALIDATION_PATTERNS.EMAIL),
       ])],
@@ -43,24 +51,38 @@ export class LoginComponent  extends BaseClass implements OnInit {
     });
   }
   onSubmit() {
-    const username = this.loginForm.get('username').value;
-    const password = this.loginForm.get('password').value;
+    this.loaderService.showLoader();
     this.commonRequestService
       .request(RequestEnums.LOGIN, this.loginForm.value)
       .subscribe((res: any) => {
-      this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ROLE, res.data.role);
-      this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ACCESS_TOKEN, res.data.access_token);
-      this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.UID, res.data.uid);
-      this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ID, res.data._id);
-      this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.PROVIDER, res.data.provider);
+        this.loaderService.dissmissLoading();
+        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ROLE, res.data.role);
+        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ACCESS_TOKEN, res.data.access_token);
+        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.UID, res.data.uid);
+        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ID, res.data._id);
+        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.PROVIDER, res.data.provider);
 
         if (res.statusCode === 200) {
-          alert('logged in Successfully');
+          this.toasterService.presentToast({
+            message: 'Logged in Successfully',
+            color: TOAST_COLOR_ENUMS.SUCCESS
+          });
+          this.router.navigate(['tabs', 'tab3']);
         }
         else {
-          alert("Invalid credentials");
+          this.toasterService.presentToast({
+            message: 'Invalid credentials',
+            color: TOAST_COLOR_ENUMS.SUCCESS
+          });
         }
       },
-    )
+        (error => {
+          this.loaderService.dissmissLoading();
+          this.toasterService.presentToast({
+            message: error,
+            color: TOAST_COLOR_ENUMS.DANGER
+          });
+        })
+      )
   }
 }

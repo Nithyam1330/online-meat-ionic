@@ -7,7 +7,7 @@ import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
 import { LOCAL_STORAGE_ENUMS } from 'src/app/shared/constants/local-storage.enums';
-import { ToasterService } from 'src/app/shared/services/common/toaster/toaster.service';
+import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 @Component({
   selector: 'app-profile',
@@ -38,8 +38,8 @@ export class ProfileComponent extends BaseClass implements OnInit {
     private formBuilder: FormBuilder,
     private commonRequestService: CommonRequestService,
     private StorageService: StorageService,
-    private loader: LoaderService,
-    private toaster: ToasterService
+    private loaderService: LoaderService,
+    private toasterService: ToasterService
   ) {
     super();
   }
@@ -89,7 +89,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
   }
 
   onSubmit() {
-    this.loader.showLoader();
+    this.loaderService.showLoader();
     if (this.isUpdate) {
       RequestEnums.UPDATE_USER_PROFILE_DATA.values = [
         this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
@@ -99,14 +99,20 @@ export class ProfileComponent extends BaseClass implements OnInit {
         .subscribe(
           (response) => {
             if (Utils.isValidInput(response)) {
-              this.loader.dissmissLoading();
-              this.toaster.presentToast(response.message,'success');
+              this.loaderService.dissmissLoading();
+              this.toasterService.presentToast({
+                message: response.message,
+                color: TOAST_COLOR_ENUMS.SUCCESS
+              });
             }
           },
           (error) => {
             if (error) {
-              this.loader.dissmissLoading();
-              this.toaster.presentToast(error.error.message, 'danger');
+              this.loaderService.dissmissLoading();
+              this.toasterService.presentToast({
+                message: error.error.message,
+                color: TOAST_COLOR_ENUMS.DANGER
+              });
             }
           }
         );
@@ -119,14 +125,20 @@ export class ProfileComponent extends BaseClass implements OnInit {
         .subscribe(
           (response) => {
             if (Utils.isValidInput(response)) {
-              this.loader.dissmissLoading();
-              this.toaster.presentToast(response.message,'success');
+              this.loaderService.dissmissLoading();
+              this.toasterService.presentToast({
+                message: response.message,
+                color: TOAST_COLOR_ENUMS.SUCCESS
+              });
             }
           },
           (error) => {
             if (error) {
-              this.loader.dissmissLoading();
-              this.toaster.presentToast(error.error.message, 'danger');
+              this.loaderService.dissmissLoading();
+              this.toasterService.presentToast({
+                message: error.error.message,
+                color: TOAST_COLOR_ENUMS.DANGER
+              });
             }
           }
         );
@@ -134,7 +146,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
   }
 
   getProfileData() {
-    this.loader.showLoader();
+    this.loaderService.showLoader();
     RequestEnums.GET_USER_PROFILE_DATA.values = [
       this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
     ];
@@ -142,7 +154,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
       .request(RequestEnums.GET_USER_PROFILE_DATA)
       .subscribe(
         (Response) => {
-          this.loader.dissmissLoading();
+          this.loaderService.dissmissLoading();
           if (Utils.isValidInput(Response.data)) {
             this.profileForm.patchValue(Response.data[0]);
             if (Response.data[0].updatedAt !== '' || null) {
@@ -151,7 +163,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
           }
         },
         (error) => {
-          if(error)this.loader.dissmissLoading();
+          if(error)this.loaderService.dissmissLoading();
 
         }
       );

@@ -37,11 +37,4 @@ export class Tab3Page {
     this.router.navigate(["profile"]);
   }
 
-  openLoader() {
-    this.loader.showLoader();
-  }
-
-  openToaster() {
-    this.toaster.presentToast(`1 KG Mutton.`,'medium')
-  }
 }

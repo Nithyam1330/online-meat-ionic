@@ -53,18 +53,21 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.initializeProfile();
   }
 
+
   /** fetch Gender List */
   private async getAllGenders() {
-    await this.loaderService.showLoader();
+    // await this.loaderService.showLoader();
     this.commonRequestService.request(RequestEnums.GET_GENDER_TYPES).subscribe(
-      (response) => {
-        this.loaderService.dissmissLoading();
+      async (response) => {
+        await this.loaderService.dissmissLoading();
         if (Utils.isValidInput(response.data)) {
           this.genderListData = response.data;
         }
       },
-      (error) => {
-        if (error) this.loaderService.dissmissLoading();
+      async (error) => {
+        if (error){
+          await this.loaderService.dissmissLoading();
+        }
       }
     );
   }

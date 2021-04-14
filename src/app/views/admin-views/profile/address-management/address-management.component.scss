@@ -1,0 +1,25 @@
+ion-content {
+  --background: url('../../../../../assets/images/bg.jpeg');
+}
+
+ion-icon.header {
+  font-size: 30px;
+  color: white;
+}
+
+ion-card {
+  --background: transparent;
+}
+
+ion-select {
+  width: 100%;
+  justify-content: center;
+}
+.drop-down{
+  height: 65px;
+}
+ion-icon{
+  padding: 14px;
+  color: aliceblue;
+font-size: 17px;
+}

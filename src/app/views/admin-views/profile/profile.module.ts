@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/shared.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
+import { AddressManagementRoutingModule } from './address-management/address-management-routing.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { ProfileComponent } from './profile.component';
   imports: [
     CommonModule,
     ProfileRoutingModule,
-    SharedModule
+    SharedModule,
+    AddressManagementRoutingModule
   ],
   providers:[]
 })

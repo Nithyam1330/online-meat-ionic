@@ -12,6 +12,7 @@ import {
   TOAST_COLOR_ENUMS,
 } from 'src/app/shared/services/common/toaster/toaster.service';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -42,7 +43,8 @@ export class ProfileComponent extends BaseClass implements OnInit {
     private commonRequestService: CommonRequestService,
     private StorageService: StorageService,
     private loaderService: LoaderService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private router: Router
   ) {
     super();
   }
@@ -52,7 +54,6 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.getProfileData();
     this.initializeProfile();
   }
-
 
   /** fetch Gender List */
   private async getAllGenders() {
@@ -65,7 +66,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
         }
       },
       async (error) => {
-        if (error){
+        if (error) {
           await this.loaderService.dissmissLoading();
         }
       }
@@ -110,7 +111,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
 
   /* Fetch Existing Profile Data*/
   private async getProfileData() {
-   await this.loaderService.showLoader();
+    await this.loaderService.showLoader();
     RequestEnums.GET_USER_PROFILE_DATA.values = [
       this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
     ];
@@ -118,7 +119,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
       .request(RequestEnums.GET_USER_PROFILE_DATA)
       .subscribe(
         async (Response) => {
-          await  this.loaderService.dissmissLoading();
+          await this.loaderService.dissmissLoading();
           if (Utils.isValidInput(Response.data)) {
             this.profileForm.patchValue(Response.data[0]);
             if (Response.data[0].updatedAt !== '' || null) {
@@ -128,7 +129,8 @@ export class ProfileComponent extends BaseClass implements OnInit {
         },
         async (error) => {
           if (error) {
-            await this.loaderService.dissmissLoading();}
+            await this.loaderService.dissmissLoading();
+          }
         }
       );
   }
@@ -153,7 +155,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
         },
         async (error) => {
           if (error) {
-            await  this.loaderService.dissmissLoading();
+            await this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
               message: error.error.message,
               color: TOAST_COLOR_ENUMS.DANGER,
@@ -165,7 +167,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
 
   /*for Updating Existing Profile */
   private async updateProfile() {
-   await this.loaderService.showLoader();
+    await this.loaderService.showLoader();
     RequestEnums.UPDATE_USER_PROFILE_DATA.values = [
       this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
     ];
@@ -183,7 +185,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
         },
         async (error) => {
           if (error) {
-            await  this.loaderService.dissmissLoading();
+            await this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
               message: error.error.message,
               color: TOAST_COLOR_ENUMS.DANGER,
@@ -191,5 +193,10 @@ export class ProfileComponent extends BaseClass implements OnInit {
           }
         }
       );
+  }
+
+  /**List View Address */
+  public listAddress() {
+    this.router.navigate(['profile', 'address']);
   }
 }

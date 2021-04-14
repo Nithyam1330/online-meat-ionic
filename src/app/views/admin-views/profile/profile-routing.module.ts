@@ -6,6 +6,9 @@ const routes: Routes = [
   {
     path: '',
     component: ProfileComponent,
+  },{
+    path: 'address',
+    loadChildren: () => import('./address-management/address-management.module').then(m => m.AddressManagementModule)
   }
 ];
 

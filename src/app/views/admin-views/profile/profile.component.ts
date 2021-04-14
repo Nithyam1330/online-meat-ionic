@@ -114,8 +114,8 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.commonRequestService
       .request(RequestEnums.GET_USER_PROFILE_DATA)
       .subscribe(
-        (Response) => {
-          this.loaderService.dissmissLoading();
+        async (Response) => {
+          await  this.loaderService.dissmissLoading();
           if (Utils.isValidInput(Response.data)) {
             this.profileForm.patchValue(Response.data[0]);
             if (Response.data[0].updatedAt !== '' || null) {
@@ -123,8 +123,9 @@ export class ProfileComponent extends BaseClass implements OnInit {
             }
           }
         },
-        (error) => {
-          if (error) this.loaderService.dissmissLoading();
+        async (error) => {
+          if (error) {
+            await this.loaderService.dissmissLoading();}
         }
       );
   }
@@ -138,18 +139,18 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.commonRequestService
       .request(RequestEnums.SAVE_PROFILE, this.profileForm.value)
       .subscribe(
-        (response) => {
+        async (response) => {
           if (Utils.isValidInput(response)) {
-            this.loaderService.dissmissLoading();
+            await this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
               message: response.message,
               color: TOAST_COLOR_ENUMS.SUCCESS,
             });
           }
         },
-        (error) => {
+        async (error) => {
           if (error) {
-            this.loaderService.dissmissLoading();
+            await  this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
               message: error.error.message,
               color: TOAST_COLOR_ENUMS.DANGER,
@@ -168,18 +169,18 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.commonRequestService
       .request(RequestEnums.UPDATE_USER_PROFILE_DATA, this.profileForm.value)
       .subscribe(
-        (response) => {
+        async (response) => {
           if (Utils.isValidInput(response)) {
-            this.loaderService.dissmissLoading();
+            await this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
               message: response.message,
               color: TOAST_COLOR_ENUMS.SUCCESS,
             });
           }
         },
-        (error) => {
+        async (error) => {
           if (error) {
-            this.loaderService.dissmissLoading();
+            await  this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
               message: error.error.message,
               color: TOAST_COLOR_ENUMS.DANGER,

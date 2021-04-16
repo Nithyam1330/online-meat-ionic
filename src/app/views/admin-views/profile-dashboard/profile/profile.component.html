@@ -34,7 +34,7 @@
 
           <div class="h-px-90">
             <ion-item>
-              <ion-label position="floating">PhoneNumber</ion-label>
+              <ion-label position="floating">Phone Number</ion-label>
               <ion-input formControlName="phoneNumber" type="text" placeholder="Enter PhoneNumber" maxlength="10" minlength="10"  (keypress)="onlyNumber($event)"></ion-input>
             </ion-item>
             <ion-text color="danger" class="f14"
@@ -45,8 +45,8 @@
 
           <div class="h-px-90">
             <ion-item>
-              <ion-label color="medium">Gender</ion-label>
-              <ion-select class="ion-text-end drop-down" name="gender_id" formControlName="gender_id">
+              <ion-label color="medium" position="floating">Gender</ion-label>
+              <ion-select name="gender_id" formControlName="gender_id">
                 <ng-container *ngFor="let gender of genderListData">
                 <ion-select-option [value]="gender.gender_id">{{gender.name}}</ion-select-option>
               </ng-container>
@@ -62,6 +62,7 @@
             </ion-button>
           </div>
         </form>
+
       </ion-card-content>
     </ion-card>
   </div>

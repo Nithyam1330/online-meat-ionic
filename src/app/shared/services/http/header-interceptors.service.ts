@@ -1,16 +1,48 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpHeaders, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
 import { LOCAL_STORAGE_ENUMS } from '../../constants/local-storage.enums';
+import { catchError } from 'rxjs/operators';
+import { LoaderService } from '../common/loader/loader.service';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 
 @Injectable()
 export class HeaderInterceptorsService {
 
   constructor(
-    private StorageService:StorageService) 
-  { }
+    private StorageService: StorageService,
+    private loaderService: LoaderService,
+    private router: Router,
+    private alertController: AlertController,
+    private storageService: StorageService) { }
+
+  handleAuthError= async (err: HttpErrorResponse): Promise<any> => {
+    console.log('sample');
+    await this.loaderService.dissmissLoading();
+    if (err.status === 401) {
+      const alert = await this.alertController.create({
+        header: 'Alert',
+        message: 'Session Expired. Please Login again',
+        buttons: [
+          {
+            text: 'Ok',
+            cssClass: 'secondary'
+          }
+        ],
+        backdropDismiss: false
+      });
+      alert.onDidDismiss().then(res => {
+        this.storageService.clearLocalStorage();
+        this.router.navigate(['/login'], { replaceUrl: true });
+      });
+      return await alert.present();
+    }
+    return of(err.message);
+
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const defaultHeaders = {
@@ -33,6 +65,6 @@ export class HeaderInterceptorsService {
     const modifiedReq = req.clone({
       headers: new HttpHeaders(defaultHeaders),
     });
-    return next.handle(modifiedReq);
+    return next.handle(modifiedReq).pipe(catchError(this.handleAuthError));
   }
 }

@@ -1,0 +1,95 @@
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <app-back-navigation-header></app-back-navigation-header>
+  </div>
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-center white-color">Add Address</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="addressForm">
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label color="medium">Address Type</ion-label>
+              <ion-select class="ion-text-end drop-down" name="type" formControlName="type">
+                <ng-container *ngFor="let type of addressTypeList">
+                <ion-select-option [value]="type.name">{{type.name}}</ion-select-option>
+              </ng-container>
+              </ion-select>
+            </ion-item>
+
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label color="medium">Country</ion-label>
+              <ion-select class="ion-text-end drop-down" name="country" formControlName="country">
+                <ng-container *ngFor="let country of countryList">
+                <ion-select-option [value]="country.name">{{country.name}}</ion-select-option>
+              </ng-container>
+              </ion-select>
+            </ion-item>
+
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label color="medium">State</ion-label>
+              <ion-select class="ion-text-end drop-down" name="state" formControlName="state">
+                <ng-container *ngFor="let state of stateList">
+                <ion-select-option [value]="state.name">{{state.name}}</ion-select-option>
+              </ng-container>
+              </ion-select>
+            </ion-item>
+
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label color="medium">City</ion-label>
+              <ion-select class="ion-text-end drop-down" name="city" formControlName="city">
+                <ng-container *ngFor="let city of cityList">
+                <ion-select-option [value]="city.name">{{city.name}}</ion-select-option>
+              </ng-container>
+              </ion-select>
+            </ion-item>
+
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label position="floating">Street</ion-label>
+              <ion-input formControlName="street" type="text" placeholder="Enter Street Name"></ion-input>
+            </ion-item>
+          </div>
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label position="floating">Landmark</ion-label>
+              <ion-input formControlName="landmark" type="text" placeholder="Enter Landmark"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label position="floating">Pincode</ion-label>
+              <ion-input formControlName="pincode" maxlength="6" allowOnlyNumber type="text" placeholder="Enter Pincode"></ion-input>
+            </ion-item>
+          </div>
+          <div class="" >
+            <ion-button (click)="cancel()"   color="light" size="small" fill="outline" shape="round" >Cancel
+              <ion-icon class="p-l-6" name="arrow-forward-circle"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="ion-text-end">
+            <ion-button (click)="onSubmit()" color="light" size="small" fill="outline" shape="round" [disabled]='!addressForm.valid'>Submit
+              <ion-icon class="p-l-6" name="arrow-forward-circle"></ion-icon>
+            </ion-button>
+          </div>
+        </form>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -24,17 +24,13 @@ export class Tab3Page {
     this.router.navigate(["forgot-password"]);
 
   }
-  async navigateToReset() {
-    this.router.navigate(["reset-password"]);
-
-  }
   async navigateToRegister() {
     this.router.navigate(["register"]);
 
   }
 
-  async navigateToProfile(){
-    this.router.navigate(["profile"]);
+  async navigateToProfileDashboard(){
+    this.router.navigate(["profile-dashboard"]);
   }
 
 }

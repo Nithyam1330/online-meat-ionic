@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { TabsComponent } from './shared/components/layouts/tabs/tabs.component';
+import { CanActivateService } from './shared/services/guard-services/can-activate.service';
 
 const routes: Routes = [
   {
@@ -42,7 +43,7 @@ const routes: Routes = [
       },
       {
         path: 'reset-password',
-        loadChildren: () => import('./views/auth-views/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+        loadChildren: () => import('./views/admin-views/profile-dashboard/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
       },
       {
         path: 'login',
@@ -53,10 +54,11 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    canActivate: [CanActivateService],
     children: [
       {
-        path: 'profile',
-        loadChildren: () => import('./views/admin-views/profile/profile.module').then(m => m.ProfileModule)
+        path: 'profile-dashboard',
+        loadChildren: () => import('./views/admin-views/profile-dashboard/profile-dashboard.module').then(m => m.ProfileDashboardModule)
       }
     ]
   }

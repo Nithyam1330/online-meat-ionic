@@ -47,5 +47,17 @@ export const RequestEnums = {
     keys: ['id'],
     values: [],
   },
+  ADD_NEW_ADDRESS:{
+    type: 'POST',
+    path: '/user-details/605f2c94e533ec0015d63eed/address',
+    keys: [],
+    values: [],
+  },
+  GET_ALL_ADDRESS:{
+    type: 'GET',
+    path: '/user-details/605f2c94e533ec0015d63eed/address',
+    keys: [],
+    values: [],
+  }
 
 };

@@ -10,7 +10,7 @@ export class StorageService {
     private encryptDectryptService: EncryptDectryptService
   ) { }
 
-  setLocalStorageItem(key: string, value) {
+  public setLocalStorageItem(key: string, value) {
     if (value) {
       if (typeof value === 'string') {
         localStorage.setItem(key, this.encryptDectryptService.getCipherText(value));
@@ -20,7 +20,7 @@ export class StorageService {
     }
   }
 
-  getLocalStorageItem(key) {
+  public getLocalStorageItem(key) {
     if (key && localStorage.getItem(key)) {
       try {
         return this.encryptDectryptService.getNormalText(JSON.parse(localStorage.getItem(key)));
@@ -30,7 +30,7 @@ export class StorageService {
     }
   }
 
-  deleteLocalStorageItem(keys) {
+  public deleteLocalStorageItem(keys) {
     if (keys instanceof Array) {
       for (const iterator of keys) {
         localStorage.removeItem(iterator);
@@ -38,5 +38,9 @@ export class StorageService {
     } else {
       localStorage.removeItem(keys);
     }
+  }
+
+  public clearLocalStorage() {
+    localStorage.clear()
   }
 }

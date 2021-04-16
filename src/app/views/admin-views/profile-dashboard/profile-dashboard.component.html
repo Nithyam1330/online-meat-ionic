@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <app-back-navigation-header></app-back-navigation-header>
+  </div>
+
+  <div>
+    <ion-card class="ion-margin p-5 border-radius-30" (click)="navigateToProfile()">
+      <ion-grid>
+        <ion-row class="ion-justify-content-between font-size-16">
+          <ion-col>
+            <ion-label class="font-weight-600">Profile Details</ion-label>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-card>
+
+    <ion-card class="ion-margin p-5 border-radius-30" (click)="navigateToAddressManagement()">
+      <ion-grid>
+        <ion-row class="ion-justify-content-between font-size-16">
+          <ion-col>
+            <ion-label class="font-weight-600">Address Management</ion-label>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-card>
+
+    <ion-card class="ion-margin p-5 border-radius-30" (click)="navigateToResetPassword()">
+      <ion-grid>
+        <ion-row class="ion-justify-content-between font-size-16">
+          <ion-col>
+            <ion-label class="font-weight-600">Reset Password</ion-label>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-card>
+
+    <ion-card class="ion-margin p-5 border-radius-30" (click)="logout()">
+      <ion-grid>
+        <ion-row class="ion-justify-content-between font-size-16">
+          <ion-col>
+            <ion-label class="font-weight-600">Logout</ion-label>
+          </ion-col>
+          <ion-col class="ion-text-end">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-card>
+  </div>
+</ion-content>

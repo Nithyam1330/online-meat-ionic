@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <app-back-navigation-header></app-back-navigation-header>
+  </div>
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle class="ion-text-center white-color">Profile</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="profileForm">
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input formControlName="firstName" type="text" placeholder="Enter First Name"></ion-input>
+            </ion-item>
+            <ion-text color="danger" class="f14"
+            *ngIf="isValidField(profileForm, 'firstName')">
+            {{ getErrorMessage(profileForm, validationMessages, 'firstName') }}
+          </ion-text>
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input formControlName="lastName" type="text" placeholder="Enter Last Name"></ion-input>
+            </ion-item>
+            <ion-text color="danger" class="f14"
+            *ngIf="isValidField(profileForm, 'lastName')">
+            {{ getErrorMessage(profileForm, validationMessages, 'lastName') }}
+          </ion-text>
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label position="floating">Phone Number</ion-label>
+              <ion-input formControlName="phoneNumber" type="text" placeholder="Enter PhoneNumber" maxlength="10" minlength="10"  (keypress)="onlyNumber($event)"></ion-input>
+            </ion-item>
+            <ion-text color="danger" class="f14"
+            *ngIf="isValidField(profileForm, 'phoneNumber')">
+            {{ getErrorMessage(profileForm, validationMessages, 'phoneNumber') }}
+          </ion-text>
+          </div>
+
+          <div class="h-px-90">
+            <ion-item>
+              <ion-label color="medium" position="floating">Gender</ion-label>
+              <ion-select name="gender_id" formControlName="gender_id">
+                <ng-container *ngFor="let gender of genderListData">
+                <ion-select-option [value]="gender.gender_id">{{gender.name}}</ion-select-option>
+              </ng-container>
+              </ion-select>
+            </ion-item>
+            <ion-text color="danger" class="f14"   *ngIf="isValidField(profileForm, 'gender_id')">
+            {{ getErrorMessage(profileForm, validationMessages, 'gender_id') }}
+          </ion-text>
+          </div>
+          <div class="ion-text-end">
+            <ion-button (click)="onSubmit()" color="light" size="small" fill="outline" shape="round" [disabled]='!profileForm.valid'>Submit
+              <ion-icon class="p-l-10" name="arrow-forward-circle"></ion-icon>
+            </ion-button>
+          </div>
+        </form>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

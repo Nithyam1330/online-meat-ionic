@@ -21,7 +21,6 @@ export class HeaderInterceptorsService {
 
   handleAuthError= async (err: HttpErrorResponse): Promise<any> => {
     console.log('sample');
-    // this.loadingController.getTop().then(v => v ? this.loadingController.dismiss() : null);
     await this.loaderService.dissmissLoading();
     if (err.status === 401) {
       const alert = await this.alertController.create({

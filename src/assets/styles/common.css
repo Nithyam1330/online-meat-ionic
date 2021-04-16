@@ -8,6 +8,14 @@
     color: white;
 }
 
+.black-color {
+    color: black !important;
+}
+
+.grey-color {
+    color: grey !important;
+}
+
 .app-theme-color {
     color: #1149ac !important;
 }

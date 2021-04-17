@@ -64,9 +64,6 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
             color: TOAST_COLOR_ENUMS.SUCCESS
           })
         }
-        else if (res.errorType=== 'StrictModeError' || res.data=== null) {
-          alert('Old Password Does not match');
-        }
         else {
           this.toastService.presentToast({
             message: 'Error',

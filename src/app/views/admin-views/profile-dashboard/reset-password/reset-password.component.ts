@@ -8,6 +8,7 @@ import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { CustomValidators } from 'src/app/shared/services/common/validators';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
+import Utils from 'src/app/shared/services/common/utils';
 
 @Component({
   selector: 'app-reset-password',
@@ -62,6 +63,9 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
             message: 'Password has been changed Successfully',
             color: TOAST_COLOR_ENUMS.SUCCESS
           })
+        }
+        else if (res.errorType=== 'StrictModeError' || res.data=== null) {
+          alert('Old Password Does not match');
         }
         else {
           this.toastService.presentToast({

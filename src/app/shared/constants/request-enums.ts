@@ -47,16 +47,34 @@ export const RequestEnums = {
     keys: ['id'],
     values: [],
   },
-  ADD_NEW_ADDRESS:{
+  ADD_NEW_ADDRESS: {
     type: 'POST',
-    path: '/user-details/605f2c94e533ec0015d63eed/address',
-    keys: [],
+    path: '/user-details/:id/address',
+    keys: ['id'],
     values: [],
   },
-  GET_ALL_ADDRESS:{
+  UPDATE_ADDRESS: {
+    type: 'PUT',
+    path: '/user-details/:id/address/:address_id',
+    keys: ['id', 'address_id'],
+    values: [],
+  },
+  GET_ALL_ADDRESS: {
     type: 'GET',
-    path: '/user-details/605f2c94e533ec0015d63eed/address',
-    keys: [],
+    path: '/user-details/:id/address',
+    keys: ['id'],
+    values: [],
+  },
+  DELETE_ADDRESS_BY_ADDRESS_ID: {
+    type: 'DELETE',
+    path: '/user-details/:id/address/:addressId',
+    keys: ['id', 'addressId'],
+    values: [],
+  },
+  GET_ADDRESS_BY_ADDRESS_ID: {
+    type: 'GET',
+    path: '/user-details/:id/address/:addressId',
+    keys: ['id', 'addressId'],
     values: [],
   }
 

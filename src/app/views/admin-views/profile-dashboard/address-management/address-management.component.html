@@ -2,9 +2,20 @@
 	<div class="ion-padding">
 		<app-back-navigation-header></app-back-navigation-header>
 	</div>
-	<div class="ion-text-center white-color">
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="navigateToAddAddress()">
+		<ion-fab-button size="small">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+	<div class="ion-text-center white-color ">
 		<ion-label>Address List</ion-label>
 	</div>
+
+	<div *ngIf="addressList.length <= 0" class="ion-text-center error">
+		<ion-label>No Address Found</ion-label>
+	</div>
+	<ng-container  *ngIf="addressList.length > 0">
 	<ion-card *ngFor="let address of addressList" class="ion-margin each-card">
 		<ion-row class="ion-justify-content-between">
 			<ion-col size="6" class="p-10">
@@ -12,7 +23,8 @@
 			</ion-col>
 			<ion-col size="6" class="ion-text-end">
 
-				<ion-button shape="round" size="small" fill="clear" class="p-0 m-0" (click)="openAddressOptions()">
+				<ion-button shape="round" size="small" fill="clear" class="p-0 m-0"
+					(click)="openAddressOptions(address)">
 					<ion-icon name="ellipsis-vertical" slot="icon-only" class="font-size-18 grey-color"></ion-icon>
 					<!-- <ion-icon slot="icon-only" name="trash" class="font-size-18 grey-color"></ion-icon> -->
 				</ion-button>
@@ -22,23 +34,6 @@
 			Street: {{address.street}}, Landmark: {{address.landmark}} , City: {{address.city | titlecase}}, State:
 			{{address.state | titlecase}}, Pincode: {{address.pincode}}, Country: {{address.country | titlecase}}
 		</ion-card-content>
-		<!-- <ion-card-footer>
-			<ion-grid >
-				<ion-row class="ion-justify-content-between">
-					<ion-col size="6">
-						<ion-button shape="round" fill="outline">
-							<ion-icon slot="start" name="pencil"></ion-icon>
-							Edit
-						</ion-button>
-					</ion-col>
-					<ion-col size="6">
-						<ion-button shape="round" fill="outline">
-							<ion-icon slot="start" name="trash"></ion-icon>
-						</ion-button>
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-
-		</ion-card-footer> -->
 	</ion-card>
+</ng-container>
 </ion-content>

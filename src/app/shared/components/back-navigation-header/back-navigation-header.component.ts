@@ -8,15 +8,15 @@ import { Router } from '@angular/router';
 })
 export class BackNavigationHeaderComponent implements OnInit {
 
-  constructor(private location: Location,private router:Router) { }
+  constructor(private location: Location, private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-   navigateToBack(){
+  public navigateToBack() {
     this.location.back();
   }
 
-  navigateToHome(){
+  public navigateToHome() {
     this.router.navigate(['tabs', 'tab3']);
   }
 

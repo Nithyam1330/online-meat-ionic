@@ -11,11 +11,11 @@ const routes: Routes = [
   },
   {
     path: 'add-address',
-    component: ModifyAddressComponent,
+    loadChildren: () => import('./modify-address/modify-address.module').then(m => m.ModifyAddressModule)
   },
   {
     path: ':id',
-    component: ModifyAddressComponent,
+    loadChildren: () => import('./modify-address/modify-address.module').then(m => m.ModifyAddressModule)
   },
 ];
 

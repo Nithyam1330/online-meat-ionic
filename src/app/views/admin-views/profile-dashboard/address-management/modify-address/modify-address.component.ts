@@ -140,15 +140,21 @@ export class ModifyAddressComponent extends BaseClass implements OnInit {
     ]
     this.commonRequestService
       .request(RequestEnums.UPDATE_ADDRESS, this.addressForm.value)
-      .subscribe(async (Response) => {
+      .subscribe(async (res) => {
         this.addressForm.reset();
         await this.loaderService.dissmissLoading();
-        if (Utils.isValidInput(Response.data)) {
+        if (Utils.isValidInput(res.errorType) || !Utils.isValidInput(res.data) || res.statusCode !== 200) {
+          this.toasterService.presentToast({
+            message: res.message,
+            color: 'danger'
+          });
+        } else {
           this.toasterService.presentToast({
             message: 'Address Updated Successfully',
             color: TOAST_COLOR_ENUMS.SUCCESS,
-          })
+          });
           this.router.navigate(['profile-dashboard', 'address-management']);
+
         }
       }, async (error) => {
         await this.loaderService.dissmissLoading();
@@ -166,14 +172,19 @@ export class ModifyAddressComponent extends BaseClass implements OnInit {
     ]
     this.commonRequestService
       .request(RequestEnums.ADD_NEW_ADDRESS, this.addressForm.value)
-      .subscribe(async (Response) => {
+      .subscribe(async (res) => {
         this.addressForm.reset();
         await this.loaderService.dissmissLoading();
-        if (Utils.isValidInput(Response.data)) {
+        if (Utils.isValidInput(res.errorType) || !Utils.isValidInput(res.data) || res.statusCode !== 200) {
           this.toasterService.presentToast({
-            message: Response['message'],
+            message: res.message,
+            color: 'danger'
+          });
+        } else {
+          this.toasterService.presentToast({
+            message: 'Address Added Successfully',
             color: TOAST_COLOR_ENUMS.SUCCESS,
-          })
+          });
           this.router.navigate(['profile-dashboard', 'address-management']);
         }
       }, async (error) => {

@@ -27,10 +27,10 @@ export class AddressManagementComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAllAddress();
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    this.getAllAddress();
   }
 
   public navigateToAddAddress() {
@@ -95,7 +95,24 @@ export class AddressManagementComponent implements OnInit {
 
   private async deleteAddress(address) {
     console.log(address);
-    // this.commonRequestService.request(RequestEnums.) 
+    RequestEnums.DELETE_ADDRESS_BY_ADDRESS_ID.values = [
+      this.storageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
+      address.address_id
+    ]
+    this.commonRequestService.request(RequestEnums.DELETE_ADDRESS_BY_ADDRESS_ID).subscribe(res => {
+      if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+        this.toasterService.presentToast({
+          message: res.message,
+          color: 'danger'
+        });
+      } else {
+        this.toasterService.presentToast({
+          message: 'Address deleted successfully.',
+          color: 'success'
+        });
+        this.addressList = res.data;
+      }
+    }) 
   }
 
   /**
@@ -108,16 +125,22 @@ export class AddressManagementComponent implements OnInit {
     ]
     this.commonRequestService
       .request(RequestEnums.GET_ALL_ADDRESS)
-      .subscribe(async (Response) => {
+      .subscribe(async (res) => {
         await this.loaderService.dissmissLoading();
 
-        if (Utils.isValidInput(Response.data)) {
-          this.addressList = Response.data;
-          console.log(this.addressList);
+        if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+          this.toasterService.presentToast({
+            message: res.message,
+            color: 'danger'
+          });
+        } else {
+          this.addressList = res.data;
         }
-      }, async error => {
-        console.log(error);
-        // await this.loaderService.dissmissLoading();
-      });
-  }
+  }, async error => {
+    this.toasterService.presentToast({
+      message: error.message,
+      color: 'danger'
+    });
+  })
+}
 }

@@ -1,5 +1,7 @@
 {
   "name": "meat-app-ionic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

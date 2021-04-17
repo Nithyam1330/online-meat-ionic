@@ -66,9 +66,9 @@ export const RequestEnums = {
     values: [],
   },
   DELETE_ADDRESS_BY_ADDRESS_ID: {
-    type: 'GET',
-    path: '/user-details/605f2c94e533ec0015d63eed/address',
-    keys: [],
+    type: 'DELETE',
+    path: '/user-details/:id/address/:addressId',
+    keys: ['id', 'addressId'],
     values: [],
   },
   GET_ADDRESS_BY_ADDRESS_ID: {

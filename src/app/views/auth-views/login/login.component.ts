@@ -8,6 +8,7 @@ import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
+import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 
 
@@ -56,33 +57,33 @@ export class LoginComponent extends BaseClass implements OnInit {
       .request(RequestEnums.LOGIN, this.loginForm.value)
       .subscribe((res: any) => {
         this.loaderService.dissmissLoading();
-        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ROLE, res.data.role);
-        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ACCESS_TOKEN, res.data.access_token);
-        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.UID, res.data.uid);
-        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ID, res.data._id);
-        this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.PROVIDER, res.data.provider);
-
-        if (res.statusCode === 200) {
+        if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+          this.toasterService.presentToast({
+            message: res.message,
+            color: TOAST_COLOR_ENUMS.DANGER
+          });
+        }
+        else {
           this.toasterService.presentToast({
             message: 'Logged in Successfully',
             color: TOAST_COLOR_ENUMS.SUCCESS
           });
+          this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ROLE, res.data.role);
+          this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ACCESS_TOKEN, res.data.access_token);
+          this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.UID, res.data.uid);
+          this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ID, res.data._id);
+          this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.PROVIDER, res.data.provider);
           this.router.navigate(['tabs', 'tab3']);
         }
-        else {
-          this.toasterService.presentToast({
-            message: 'Invalid credentials',
-            color: TOAST_COLOR_ENUMS.DANGER
-          });
-        }
       },
-        (error => {
+      async error => {
           this.loaderService.dissmissLoading();
           this.toasterService.presentToast({
-            message: error,
+            message: error.message,
             color: TOAST_COLOR_ENUMS.DANGER
           });
         })
-      )
+  
+
   }
 }

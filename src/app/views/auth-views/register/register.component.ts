@@ -64,7 +64,7 @@ export class RegisterComponent extends BaseClass implements OnInit {
         else {
           this.toastService.presentToast({
             message: 'email already exists',
-            color: TOAST_COLOR_ENUMS.SUCCESS
+            color: TOAST_COLOR_ENUMS.DANGER
           })
         }
       },

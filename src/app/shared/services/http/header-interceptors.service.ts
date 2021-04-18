@@ -40,6 +40,24 @@ export class HeaderInterceptorsService {
       });
       return await alert.present();
     }
+    else if (err.status === 400) {
+      const alert = await this.alertController.create({
+        header: 'Alert',
+        message: 'Bad Request',
+        buttons: [
+          {
+            text: 'Ok',
+            cssClass: 'secondary'
+          }
+        ],
+        backdropDismiss: false
+      });
+      alert.onDidDismiss().then(res => {
+        this.storageService.clearLocalStorage();
+        this.router.navigate(['/login'], { replaceUrl: true });
+      });
+      return await alert.present();
+    }
     return of(err.message);
 
   }

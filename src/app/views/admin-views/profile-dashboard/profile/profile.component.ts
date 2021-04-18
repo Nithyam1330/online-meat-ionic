@@ -24,11 +24,11 @@ export class ProfileComponent extends BaseClass implements OnInit {
 
   validationMessages = {
     firstName: [
-      { type: 'required', message: 'Please enter your  FirstName' },
+      { type: 'required', message: 'Please enter your  First Name' },
       { type: 'pattern', message: 'Allowed Only Alphabets' },
     ],
     lastName: [
-      { type: 'required', message: 'Please enter your  LasttName' },
+      { type: 'required', message: 'Please enter your  Last Name' },
       { type: 'pattern', message: 'Allowed Only Alphabets' },
     ],
     phoneNumber: [

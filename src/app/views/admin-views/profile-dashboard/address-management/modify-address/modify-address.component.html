@@ -19,7 +19,9 @@
                 </ng-container>
               </ion-select>
             </ion-item>
-
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'type')">
+              {{ getErrorMessage(addressForm, validationMessages, 'type') }}
+            </ion-text>
           </div>
 
           <div class="h-px-90">
@@ -31,7 +33,9 @@
                 </ng-container>
               </ion-select>
             </ion-item>
-
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'country')">
+              {{ getErrorMessage(addressForm, validationMessages, 'country') }}
+            </ion-text>
           </div>
 
           <div class="h-px-90">
@@ -43,7 +47,9 @@
                 </ng-container>
               </ion-select>
             </ion-item>
-
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'state')">
+              {{ getErrorMessage(addressForm, validationMessages, 'state') }}
+            </ion-text>
           </div>
 
           <div class="h-px-90">
@@ -55,7 +61,9 @@
                 </ng-container>
               </ion-select>
             </ion-item>
-
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'city')">
+              {{ getErrorMessage(addressForm, validationMessages, 'city') }}
+            </ion-text>
           </div>
 
           <div class="h-px-90">
@@ -63,12 +71,18 @@
               <ion-label position="floating">Street</ion-label>
               <ion-input formControlName="street" type="text" placeholder="Enter Street Name"></ion-input>
             </ion-item>
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'street')">
+              {{ getErrorMessage(addressForm, validationMessages, 'street') }}
+            </ion-text>
           </div>
           <div class="h-px-90">
             <ion-item>
               <ion-label position="floating">Landmark</ion-label>
               <ion-input formControlName="landmark" type="text" placeholder="Enter Landmark"></ion-input>
             </ion-item>
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'landmark')">
+              {{ getErrorMessage(addressForm, validationMessages, 'landmark') }}
+            </ion-text>
           </div>
 
           <div class="h-px-90">
@@ -77,6 +91,9 @@
               <ion-input formControlName="pincode" maxlength="6" allowOnlyNumber type="text"
                 placeholder="Enter Pincode"></ion-input>
             </ion-item>
+            <ion-text color="danger" class="f14" *ngIf="isValidField(addressForm, 'pincode')">
+              {{ getErrorMessage(addressForm, validationMessages, 'pincode') }}
+            </ion-text>
           </div>
           <ion-grid>
             <ion-row class="ion-justify-content-between">

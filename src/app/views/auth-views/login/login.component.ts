@@ -22,10 +22,10 @@ export class LoginComponent extends BaseClass implements OnInit {
   addressList = [1, 2, 3];
   validationMessages = {
     username: [
-      { type: 'required', message: 'Please enter your  Email Address' },
+      { type: 'required', message: 'Please enter Email' },
       { type: 'pattern', message: 'Please enter your valid Email Address' },
     ],
-    password: [{ type: 'required', message: 'Please enter password' }],
+    password: [{ type: 'required', message: 'Please enter Password' }],
   };
 
   constructor(

@@ -174,13 +174,19 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.commonRequestService
       .request(RequestEnums.UPDATE_USER_PROFILE_DATA, this.profileForm.value)
       .subscribe(
-        async (response) => {
-          if (Utils.isValidInput(response)) {
+        async (res) => {
+          if (Utils.isValidInput(res.errorType) || !Utils.isValidInput(res.data) || res.statusCode !== 200 ) {
+            this.toasterService.presentToast({
+              message: res.message,
+              color: TOAST_COLOR_ENUMS.DANGER
+            })
+          } else {
             await this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
-              message: response.message,
+              message: res.message,
               color: TOAST_COLOR_ENUMS.SUCCESS,
             });
+            this.router.navigate(['profile-dashboard']);
           }
         },
         async (error) => {

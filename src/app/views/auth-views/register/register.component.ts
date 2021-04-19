@@ -56,7 +56,14 @@ export class RegisterComponent extends BaseClass implements OnInit {
     this.commonRequestService.request(RequestEnums.REGISTER, this.registerForm.value).subscribe(
       async (res: any) => {
         await this.loaderService.dissmissLoading();
-        if (res.statusCode === 200) {
+        if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+          if (res.statusCode === 400) {
+            this.toastService.presentToast({
+              message: 'Email already exists',
+              color: TOAST_COLOR_ENUMS.DANGER
+            })
+          }
+        } else {
           this.toastService.presentToast({
             message: 'Registered Succesfully',
             color: TOAST_COLOR_ENUMS.SUCCESS
@@ -74,12 +81,6 @@ export class RegisterComponent extends BaseClass implements OnInit {
             ]
           })
           await ref.present();
-        }
-        else {
-          this.toastService.presentToast({
-            message: 'email already exists',
-            color: TOAST_COLOR_ENUMS.DANGER
-          })
         }
       },
     )

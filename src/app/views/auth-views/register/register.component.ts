@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { ProviderTypes, Roles } from 'src/app/shared/constants/registration-constants';
 import { RequestEnums } from 'src/app/shared/constants/request-enums';
 import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
@@ -30,7 +31,8 @@ export class RegisterComponent extends BaseClass implements OnInit {
     private commonRequestService: CommonRequestService,
     private toastService: ToasterService,
     private loaderService: LoaderService,
-    private router: Router) {
+    private router: Router,
+    private alertController: AlertController) {
     super();
   }
 
@@ -49,17 +51,29 @@ export class RegisterComponent extends BaseClass implements OnInit {
     });
   }
 
-  onSubmit() {
-    this.loaderService.showLoader();
+  async onSubmit() {
+    await this.loaderService.showLoader();
     this.commonRequestService.request(RequestEnums.REGISTER, this.registerForm.value).subscribe(
-      (res: any) => {
-        this.loaderService.dissmissLoading();
+      async (res: any) => {
+        await this.loaderService.dissmissLoading();
         if (res.statusCode === 200) {
           this.toastService.presentToast({
             message: 'Registered Succesfully',
             color: TOAST_COLOR_ENUMS.SUCCESS
+          });
+          const ref = await this.alertController.create({
+            message: res.data.password,
+            header: 'Password',
+            buttons: [
+              {
+                text: 'ok',
+                handler: () => {
+                  this.router.navigate(['tabs', 'tab3']);
+                }
+              }
+            ]
           })
-          this.router.navigate(['tabs', 'tab3']);
+          await ref.present();
         }
         else {
           this.toastService.presentToast({

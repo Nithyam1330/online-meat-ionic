@@ -33,6 +33,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
     ],
     phoneNumber: [
       { type: 'required', message: 'Please enter your Phone number' },
+      { type: 'pattern', message: 'Please enter valid Phone number' },
     ],
     gender_id: [{ type: 'required', message: 'Please select Gender' }],
   };

@@ -151,6 +151,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
               message: response.message,
               color: TOAST_COLOR_ENUMS.SUCCESS,
             });
+            this.router.navigate(['profile-dashboard']);
           }
         },
         async (error) => {

@@ -26,7 +26,10 @@ export class ModifyAddressComponent extends BaseClass implements OnInit {
     city: [ { type: 'required', message: 'Please select your City' }],
     street: [{ type: 'required', message: 'Please enter your Street' } ],
     landmark: [ { type: 'required', message: 'Please enter your Landmark' } ],
-    pincode: [{ type: 'required', message: 'Please enter your Pincode' } ],
+    pincode: [
+      { type: 'required', message: 'Please enter your Pincode' },
+    { type: 'pattern', message: 'Please enter valid Pincode' },
+   ],
   };
   addressTypeList = [
     {

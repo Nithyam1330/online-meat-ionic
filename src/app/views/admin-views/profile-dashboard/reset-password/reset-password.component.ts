@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class ResetPasswordComponent extends BaseClass implements OnInit {
   ResetForm: FormGroup;
+  typeValue = 'password';
   validationMessages = {
     oldPassword: [
       { type: 'required', message: 'Please enter your old password' },
@@ -79,5 +80,14 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
           color: TOAST_COLOR_ENUMS.DANGER
         })
       });
+  }
+
+  /**
+   * This is invoked when user clicks and changes the Checkbox
+   * @param event Checkbox prebuilt event
+   */
+  public checkboxChange(event) {
+    console.log(event);
+    this.typeValue = event.target.checked ? 'text' : 'password';
   }
 }

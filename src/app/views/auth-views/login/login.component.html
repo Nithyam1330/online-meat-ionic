@@ -22,13 +22,16 @@
           <div class="h-px-90">
             <ion-item>
               <ion-label position="floating">Password</ion-label>
-              <ion-input formControlName="password" type="password" placeholder="Enter Password"></ion-input>
+              <ion-input formControlName="password" [type]="typeValue" placeholder="Enter Password"></ion-input>
             </ion-item>
             <ion-text color="danger" class="f14" *ngIf="isValidField(loginForm, 'password')">
               {{ getErrorMessage(loginForm, validationMessages, 'password') }}
             </ion-text>
           </div>
-
+          <div class="ion-text-center">
+            <ion-checkbox [checked]="typeValue === 'text'" (ionChange)="checkboxChange($event)"></ion-checkbox>
+            <ion-label class="font-size-16 font-weight-bold white-color p-l-5">Show Password</ion-label>
+          </div>
           <div class="ion-text-end">
             <ion-button type="submit" color="light" size="small" fill="outline" shape="round" [disabled]="loginForm.invalid">
               Login

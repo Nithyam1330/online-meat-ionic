@@ -27,6 +27,7 @@ export class LoginComponent extends BaseClass implements OnInit {
     ],
     password: [{ type: 'required', message: 'Please enter Password' }],
   };
+  typeValue = "password";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,7 +84,13 @@ export class LoginComponent extends BaseClass implements OnInit {
             color: TOAST_COLOR_ENUMS.DANGER
           });
         })
-  
+  }
 
+  /**
+   * This is invoked when user clicks and changes the Checkbox
+   * @param event Checkbox prebuilt event
+   */
+  public checkboxChange(event) {
+    this.typeValue = event.target.checked ? 'text' : 'password';
   }
 }

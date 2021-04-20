@@ -126,7 +126,10 @@ export class ModifyAddressComponent extends BaseClass implements OnInit {
       city: ['', Validators.compose([Validators.required])],
       street: ['', Validators.compose([Validators.required])],
       landmark: ['', Validators.compose([Validators.required])],
-      pincode: ['', Validators.compose([Validators.required])],
+      pincode: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern(VALIDATION_PATTERNS.PINCODE),
+      ]),],
     });
   }
 

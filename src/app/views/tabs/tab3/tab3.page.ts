@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ToasterService } from 'src/app/shared/services/common/toaster/toaster.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tab3',
@@ -10,6 +11,7 @@ import { ToasterService } from 'src/app/shared/services/common/toaster/toaster.s
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
+  version = environment.version;
   constructor(
     private modalController: ModalController,
     private loader: LoaderService,

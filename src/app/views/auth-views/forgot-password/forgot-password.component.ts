@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { RequestEnums } from 'src/app/shared/constants/request-enums';
 import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
@@ -17,8 +19,10 @@ export class ForgotPasswordComponent extends BaseClass implements OnInit {
   ForgetPasswordForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
     private commonRequestService: CommonRequestService,
-    private toasterService: ToasterService,
-    private loaderService: LoaderService) {
+    private toastService: ToasterService,
+    private loaderService: LoaderService,
+    private alertController: AlertController,
+    private router: Router) {
     super();
   }
 
@@ -45,19 +49,31 @@ export class ForgotPasswordComponent extends BaseClass implements OnInit {
   async onSubmit() {
     await this.loaderService.showLoader();
     this.commonRequestService.request(RequestEnums.FORGOT_PASSWORD, this.ForgetPasswordForm.value).subscribe(
-      (res: any) => {
-        this.loaderService.dissmissLoading();
-        if (res.statusCode === 200) {
-          this.toasterService.presentToast({
-            message: 'Password has been sent to your mail',
+      async (res: any) => {
+        await this.loaderService.dissmissLoading();
+        if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+            this.toastService.presentToast({
+              message: res.message,
+              color: TOAST_COLOR_ENUMS.DANGER
+            })
+        } else {
+          this.toastService.presentToast({
+            message: 'Password Sent To your email',
             color: TOAST_COLOR_ENUMS.SUCCESS
+          });
+          const ref = await this.alertController.create({
+            message: res.data.password,
+            header: 'Password',
+            buttons: [
+              {
+                text: 'ok',
+                handler: () => {
+                  this.router.navigate(['login']);
+                }
+              }
+            ]
           })
-        }
-        else {
-          this.toasterService.presentToast({
-            message: 'Error',
-            color: TOAST_COLOR_ENUMS.DANGER
-          })
+          await ref.present();
         }
       });
   }

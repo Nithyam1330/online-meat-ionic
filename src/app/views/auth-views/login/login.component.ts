@@ -65,10 +65,6 @@ export class LoginComponent extends BaseClass implements OnInit {
           });
         }
         else {
-          this.toasterService.presentToast({
-            message: 'Logged in Successfully',
-            color: TOAST_COLOR_ENUMS.SUCCESS
-          });
           this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ROLE, res.data.role);
           this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.ACCESS_TOKEN, res.data.access_token);
           this.StorageService.setLocalStorageItem(LOCAL_STORAGE_ENUMS.UID, res.data.uid);

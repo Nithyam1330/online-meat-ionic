@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { LOCAL_STORAGE_ENUMS } from 'src/app/shared/constants/local-storage.enums';
 import { StorageService } from 'src/app/shared/services/common/storage/storage.service';
 
@@ -12,7 +13,8 @@ export class ProfileDashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {}
@@ -29,8 +31,27 @@ export class ProfileDashboardComponent implements OnInit {
     this.router.navigate(['profile-dashboard', 'reset-password']);
   }
 
-  logout() {
-    this.storageService.clearLocalStorage();
-    this.router.navigate(['tabs','tab3']);
+  public async logout() {
+    const ref = await this.alertController.create({
+      header: 'Confirm',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Logout',
+          handler: () => {
+            this.storageService.clearLocalStorage();
+            this.router.navigate(['tabs','tab3']);
+          }
+        }
+      ]
+    })
+    await ref.present();
   }
 }

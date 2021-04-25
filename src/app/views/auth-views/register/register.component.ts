@@ -8,6 +8,7 @@ import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-pattern
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
+import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 
 
@@ -55,7 +56,14 @@ export class RegisterComponent extends BaseClass implements OnInit {
     this.commonRequestService.request(RequestEnums.REGISTER, this.registerForm.value).subscribe(
       async (res: any) => {
         await this.loaderService.dissmissLoading();
-        if (res.statusCode === 200) {
+        if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+          if (res.statusCode === 400) {
+            this.toastService.presentToast({
+              message: 'Email already exists',
+              color: TOAST_COLOR_ENUMS.DANGER
+            })
+          }
+        } else {
           this.toastService.presentToast({
             message: 'Registered Succesfully',
             color: TOAST_COLOR_ENUMS.SUCCESS
@@ -73,12 +81,6 @@ export class RegisterComponent extends BaseClass implements OnInit {
             ]
           })
           await ref.present();
-        }
-        else {
-          this.toastService.presentToast({
-            message: 'email already exists',
-            color: TOAST_COLOR_ENUMS.SUCCESS
-          })
         }
       },
     )

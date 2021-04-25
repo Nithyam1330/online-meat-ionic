@@ -3,7 +3,7 @@ import { ToastController } from '@ionic/angular';
 
 export const TOAST_COLOR_ENUMS = {
   SUCCESS: 'success',
-  DANGER: 'success'
+  DANGER: 'danger'
 }
 
 export const TOAST_POSITION_ENUMS = {

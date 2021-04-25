@@ -19,7 +19,18 @@ import Utils from '../../../../../shared/services/common/utils';
 })
 export class ModifyAddressComponent extends BaseClass implements OnInit {
   addressForm: FormGroup;
-
+  validationMessages = {
+    type: [ { type: 'required', message: 'Please select your Address type' } ],
+    country: [{ type: 'required', message: 'Please select Country' }],
+    state: [ { type: 'required', message: 'Please select your State' }],
+    city: [ { type: 'required', message: 'Please select your City' }],
+    street: [{ type: 'required', message: 'Please enter your Street' } ],
+    landmark: [ { type: 'required', message: 'Please enter your Landmark' } ],
+    pincode: [
+      { type: 'required', message: 'Please enter your Pincode' },
+    { type: 'pattern', message: 'Please enter valid Pincode' },
+   ],
+  };
   addressTypeList = [
     {
       id: 1,
@@ -118,7 +129,10 @@ export class ModifyAddressComponent extends BaseClass implements OnInit {
       city: ['', Validators.compose([Validators.required])],
       street: ['', Validators.compose([Validators.required])],
       landmark: ['', Validators.compose([Validators.required])],
-      pincode: ['', Validators.compose([Validators.required])],
+      pincode: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern(VALIDATION_PATTERNS.PINCODE),
+      ]),],
     });
   }
 

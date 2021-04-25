@@ -8,6 +8,8 @@ import { BaseClass } from 'src/app/shared/services/common/baseClass';
 import { CustomValidators } from 'src/app/shared/services/common/validators';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
+import Utils from 'src/app/shared/services/common/utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -16,16 +18,17 @@ import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/commo
 })
 export class ResetPasswordComponent extends BaseClass implements OnInit {
   ResetForm: FormGroup;
+  typeValue = 'password';
   validationMessages = {
     oldPassword: [
-      { type: 'required', message: 'Please enter your Old Password' },
+      { type: 'required', message: 'Please enter your old password' },
     ],
     newPassword: [
-      { type: 'required', message: 'Please enter your New Password' },
+      { type: 'required', message: 'Please enter your new password' },
     ],
     confirmPassword: [
-      { type: 'required', message: 'Please enter your Confirm Password' },
-      { type: 'notSame', message: 'New P7assword and Confirm Password Mismatch' },
+      { type: 'required', message: 'Please confirm your password' },
+      { type: 'notSame', message: 'New password and confirm password mismatch' },
     ],
   };
 
@@ -33,7 +36,8 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
     private StorageService: StorageService,
     private commonRequestService: CommonRequestService,
     private loaderService: LoaderService,
-    private toastService: ToasterService) {
+    private toastService: ToasterService,
+    private router: Router) {
     super();
 
   }
@@ -51,24 +55,38 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
       }
     );
   }
-  onSubmit() {
-    this.loaderService.showLoader();
+  async onSubmit() {
+    await this.loaderService.showLoader();
     RequestEnums.RESET_PASSWORD.values = [this.StorageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID)]
     this.commonRequestService.request(RequestEnums.RESET_PASSWORD, this.ResetForm.value).subscribe(
-      (res: any) => {
-        this.loaderService.dissmissLoading();
-        if (res.statusCode === 200) {
+      async (res: any) => {
+        await this.loaderService.dissmissLoading();
+        if (Utils.isValidInput(res.errorType) || !Utils.isValidInput(res.data) || res.statusCode !== 200 ) {
           this.toastService.presentToast({
-            message: 'Password has been changed Successfully',
-            color: TOAST_COLOR_ENUMS.SUCCESS
+            message: res.message,
+            color: TOAST_COLOR_ENUMS.DANGER
           })
         }
         else {
           this.toastService.presentToast({
-            message: 'Error',
-            color: TOAST_COLOR_ENUMS.DANGER
-          })
+            message: 'Password has been changed Successfully',
+            color: TOAST_COLOR_ENUMS.SUCCESS
+          });
+          this.router.navigate(['profile-dashboard']);
         }
+      }, error => {
+        this.toastService.presentToast({
+          message: error.message,
+          color: TOAST_COLOR_ENUMS.DANGER
+        })
       });
+  }
+
+  /**
+   * This is invoked when user clicks and changes the Checkbox
+   * @param event Checkbox prebuilt event
+   */
+  public checkboxChange(event) {
+    this.typeValue = event.target.checked ? 'text' : 'password';
   }
 }

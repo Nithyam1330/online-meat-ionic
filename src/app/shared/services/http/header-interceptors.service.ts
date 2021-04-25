@@ -20,12 +20,29 @@ export class HeaderInterceptorsService {
     private storageService: StorageService) { }
 
   handleAuthError= async (err: HttpErrorResponse): Promise<any> => {
-    console.log('sample');
     await this.loaderService.dissmissLoading();
     if (err.status === 401) {
       const alert = await this.alertController.create({
         header: 'Alert',
         message: 'Session Expired. Please Login again',
+        buttons: [
+          {
+            text: 'Ok',
+            cssClass: 'secondary'
+          }
+        ],
+        backdropDismiss: false
+      });
+      alert.onDidDismiss().then(res => {
+        this.storageService.clearLocalStorage();
+        this.router.navigate(['/login'], { replaceUrl: true });
+      });
+      return await alert.present();
+    }
+    else if (err.status === 400) {
+      const alert = await this.alertController.create({
+        header: 'Alert',
+        message: 'Bad Request',
         buttons: [
           {
             text: 'Ok',

@@ -24,15 +24,16 @@ export class ProfileComponent extends BaseClass implements OnInit {
 
   validationMessages = {
     firstName: [
-      { type: 'required', message: 'Please enter your  FirstName' },
+      { type: 'required', message: 'Please enter your  First Name' },
       { type: 'pattern', message: 'Allowed Only Alphabets' },
     ],
     lastName: [
-      { type: 'required', message: 'Please enter your  LasttName' },
+      { type: 'required', message: 'Please enter your  Last Name' },
       { type: 'pattern', message: 'Allowed Only Alphabets' },
     ],
     phoneNumber: [
       { type: 'required', message: 'Please enter your Phone number' },
+      { type: 'pattern', message: 'Please enter valid Phone number' },
     ],
     gender_id: [{ type: 'required', message: 'Please select Gender' }],
   };
@@ -151,6 +152,7 @@ export class ProfileComponent extends BaseClass implements OnInit {
               message: response.message,
               color: TOAST_COLOR_ENUMS.SUCCESS,
             });
+            this.router.navigate(['profile-dashboard']);
           }
         },
         async (error) => {
@@ -174,13 +176,19 @@ export class ProfileComponent extends BaseClass implements OnInit {
     this.commonRequestService
       .request(RequestEnums.UPDATE_USER_PROFILE_DATA, this.profileForm.value)
       .subscribe(
-        async (response) => {
-          if (Utils.isValidInput(response)) {
+        async (res) => {
+          if (Utils.isValidInput(res.errorType) || !Utils.isValidInput(res.data) || res.statusCode !== 200 ) {
+            this.toasterService.presentToast({
+              message: res.message,
+              color: TOAST_COLOR_ENUMS.DANGER
+            })
+          } else {
             await this.loaderService.dissmissLoading();
             this.toasterService.presentToast({
-              message: response.message,
+              message: res.message,
               color: TOAST_COLOR_ENUMS.SUCCESS,
             });
+            this.router.navigate(['profile-dashboard']);
           }
         },
         async (error) => {

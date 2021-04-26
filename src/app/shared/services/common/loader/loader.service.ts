@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { NetworkService } from '../../network/network.service';
 import Utils from '../utils';
 import { SPINNER_TYPE } from './spinner-enums';
 
@@ -21,7 +22,8 @@ export interface ILoaderService{
 })
 export class LoaderService {
   loadingRef;
-  constructor(public loadingController: LoadingController) {}
+  constructor(public loadingController: LoadingController,
+    private networkService: NetworkService) {}
 
   async showLoader(
     messageValue = 'Loading, Please Wait...',
@@ -34,7 +36,8 @@ export class LoaderService {
     isBackDropDismiss = false,
     enableBackdropShadow = true
   ) {
-    if (Utils.isValidInput(this.loadingRef)) {
+    let onlineStatus = this.networkService.getCurrentNetworkStatus();
+    if (Utils.isValidInput(this.loadingRef) || onlineStatus === 0) {
       return;
     }
     this.loadingRef = await this.loadingController.create({

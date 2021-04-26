@@ -66,7 +66,6 @@ export class AddressManagementComponent implements OnInit {
     await actionSheet.present();
 
     const { role } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
   }
 
 
@@ -94,7 +93,6 @@ export class AddressManagementComponent implements OnInit {
   }
 
   private async deleteAddress(address) {
-    console.log(address);
     RequestEnums.DELETE_ADDRESS_BY_ADDRESS_ID.values = [
       this.storageService.getLocalStorageItem(LOCAL_STORAGE_ENUMS.ID),
       address.address_id

@@ -11,6 +11,7 @@ import { HeaderInterceptorsService } from './shared/services/http/header-interce
 import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { TabsComponent } from './shared/components/layouts/tabs/tabs.component';
+import { Network } from '@ionic-native/network/ngx';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TabsComponent } from './shared/components/layouts/tabs/tabs.component';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorsService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorsService, multi: true },
+    Network
   ],
   bootstrap: [AppComponent],
 })

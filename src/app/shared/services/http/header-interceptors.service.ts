@@ -20,7 +20,6 @@ export class HeaderInterceptorsService {
     private storageService: StorageService) { }
 
   handleAuthError= async (err: HttpErrorResponse): Promise<any> => {
-    console.log('sample');
     await this.loaderService.dissmissLoading();
     if (err.status === 401) {
       const alert = await this.alertController.create({

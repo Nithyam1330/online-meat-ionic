@@ -76,6 +76,13 @@ export const RequestEnums = {
     path: '/user-details/:id/address/:addressId',
     keys: ['id', 'addressId'],
     values: [],
+  },
+  GET_ALL_PASSWORD_MANAGEMENTS: {
+    type: 'GET',
+    path: '',
+    keys: [],
+    values: [],
+    otherOptions: { offline: true, sqlRunnerMethod: 'getAllPasswordManagments' }
   }
 
 };

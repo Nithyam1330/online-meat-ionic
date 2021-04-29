@@ -31,6 +31,9 @@ export class ProfileDashboardComponent implements OnInit {
     this.router.navigate(['profile-dashboard', 'reset-password']);
   }
 
+  navigateToPasswordManagement() {
+    this.router.navigate(['password-management'])
+  }
   public async logout() {
     const ref = await this.alertController.create({
       header: 'Confirm',

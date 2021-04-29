@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS password_management(password_management_id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, app_name TEXT, app_url TEXT, app_user_name TEXT,  app_password TEXT, created_on TEXT, isOffline TEXT DEFAULT ('1'));

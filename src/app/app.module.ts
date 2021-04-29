@@ -12,6 +12,8 @@ import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/a
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { TabsComponent } from './shared/components/layouts/tabs/tabs.component';
 import { Network } from '@ionic-native/network/ngx';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 
 @NgModule({
   declarations: [
@@ -25,10 +27,12 @@ import { Network } from '@ionic-native/network/ngx';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    SharedModule,
+    SharedModule   
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    SQLite,
+    SQLitePorter,
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorsService, multi: true },
     Network
   ],

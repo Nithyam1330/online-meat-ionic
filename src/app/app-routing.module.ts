@@ -61,7 +61,11 @@ const routes: Routes = [
         loadChildren: () => import('./views/admin-views/profile-dashboard/profile-dashboard.module').then(m => m.ProfileDashboardModule)
       }
     ]
-  }
+  },
+  {
+    path: 'password-management',
+    loadChildren: () => import('./views/admin-views/password-management/password-management.module').then(m => m.PasswordManagementModule)
+  },
 ];
 @NgModule({
   imports: [

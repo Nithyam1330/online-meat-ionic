@@ -48,7 +48,12 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./views/auth-views/login/login.module').then(m => m.LoginModule)
-      }
+      },
+      {
+        path: 'categories',
+        loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesPageModule)
+      },
+     
     ]
   },
   {
@@ -61,7 +66,13 @@ const routes: Routes = [
         loadChildren: () => import('./views/admin-views/profile-dashboard/profile-dashboard.module').then(m => m.ProfileDashboardModule)
       }
     ]
-  }
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+  },
+ 
+
 ];
 @NgModule({
   imports: [

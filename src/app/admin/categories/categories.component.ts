@@ -27,7 +27,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   public navigateToAddCategories() {
-    this.router.navigate(['admin', 'categories', 'add-category']);
+    this.router.navigate(['admin', 'categories', 'add']);
   }
 
   public async openActions(category) {
@@ -39,6 +39,8 @@ export class CategoriesComponent implements OnInit {
           icon: 'pencil',
           handler: () => {
             // navigate to edit page
+            this.router.navigate(['admin', 'categories', category.categoryKey]);
+
           }
         }, {
           text: `${category.status}`,

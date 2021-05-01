@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { STATUS } from 'src/app/shared/constants/app-properties';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 import { RequestEnums } from '../../../shared/constants/request-enums';
@@ -12,6 +13,8 @@ import Utils from '../../../shared/services/common/utils';
 })
 export class ModifyCategoriesComponent implements OnInit {
   categoryForm: FormGroup;
+  STATUS = STATUS;
+  categoryKey: any;
   constructor(
     private formBuilder: FormBuilder,
     private commonRequestService: CommonRequestService,
@@ -20,7 +23,7 @@ export class ModifyCategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.createAddress();
+    // this.createAddress();
   }
 
   private initializeForm() {
@@ -30,7 +33,7 @@ export class ModifyCategoriesComponent implements OnInit {
     });
   }
  
-   createAddress() {
+   public createAddress() {
     this.commonRequestService
       .request(RequestEnums.CREATE_CATEGORY, this.categoryForm.value)
       .subscribe(res => {

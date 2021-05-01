@@ -8,7 +8,11 @@ const routes: Routes = [
     component: CategoriesComponent
   },
   {
-    path: 'add-category',
+    path: 'add',
+    loadChildren: () => import('./modify-categories/modify-categories.module').then(m => m.ModifyCategoriesModule)
+  },
+  {
+    path: ':id',
     loadChildren: () => import('./modify-categories/modify-categories.module').then(m => m.ModifyCategoriesModule)
   },
 ];

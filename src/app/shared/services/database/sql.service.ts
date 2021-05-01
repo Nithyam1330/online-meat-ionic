@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root'
 })
 export class SqlService {
-    private database: SQLiteObject;
+    public database: SQLiteObject;
     private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
     constructor(private sqlitePorter: SQLitePorter,
       private http: HttpClient,
@@ -56,4 +56,19 @@ export class SqlService {
       return tables;
     });
   }
+
+  public getFormattedArrayDataSql(data) {
+    let list = [];
+    if (data.rows.length > 0) {
+      for (let i = 0; i < data.rows.length; i++) {
+        list.push(data.rows.item(i));
+      }
+    }
+    return list;
+  }
 }
+
+
+export const TABLE_NAMES = {
+  PASSWORD_MANAGEMENT: 'password_management'
+};

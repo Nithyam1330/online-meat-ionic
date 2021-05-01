@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RequestEnums } from 'src/app/shared/constants/request-enums';
+import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 
 @Component({
   selector: 'app-password-management',
@@ -7,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordManagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(public commonRequestService: CommonRequestService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.commonRequestService.request(RequestEnums.GET_ALL_PASSWORD_MANAGEMENTS).subscribe(data => {
+      console.log(data)
+    })
+  }
 
 }

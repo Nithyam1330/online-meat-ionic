@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'add-category',
-    loadChildren: () => import('../modify-categories/modify-categories.module').then(m => m.ModifyCategoriesModule)
+    loadChildren: () => import('./modify-categories/modify-categories.module').then(m => m.ModifyCategoriesModule)
   },
 ];
 

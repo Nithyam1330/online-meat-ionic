@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
-import { RequestEnums } from '../shared/constants/request-enums';
-import Utils from '../shared/services/common/utils';
+import { RequestEnums } from '../../../shared/constants/request-enums';
+import Utils from '../../../shared/services/common/utils';
 
 @Component({
   selector: 'app-modify-categories',

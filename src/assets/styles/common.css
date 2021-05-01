@@ -16,6 +16,14 @@
     color: grey !important;
 }
 
+.green-color {
+    color: green !important;
+}
+
+.red-color {
+    color: red !important;
+}
+
 .app-theme-color {
     color: #1149ac !important;
 }

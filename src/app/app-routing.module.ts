@@ -51,7 +51,7 @@ const routes: Routes = [
       },
       {
         path: 'categories',
-        loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesModule)
+        loadChildren: () => import('./admin/categories/categories.module').then( m => m.CategoriesModule)
       },
      
     ]
@@ -70,9 +70,7 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then( m => m.AdminModule)
-  },
- 
-
+  }
 ];
 @NgModule({
   imports: [

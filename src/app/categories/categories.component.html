@@ -1,0 +1,38 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Categories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+ <ion-content [fullscreen]="true">
+	<div class="ion-padding">
+		<app-back-navigation-header></app-back-navigation-header>
+	</div>
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="navigateToAddCategories()">
+		<ion-fab-button size="small">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+
+	<div *ngIf="categories.length <= 0" class="ion-text-center error">
+		<ion-label>No Categories</ion-label>
+	</div>
+	<ng-container  *ngIf="categories.length > 0">
+	<ion-card *ngFor="let category of categories" class="ion-margin each-card">
+		<ion-row class="ion-justify-content-between">
+			<ion-col size="6" class="p-10">
+				<ion-card-subtitle class="p-l-5 font-size-16">{{category.name}}</ion-card-subtitle>
+			</ion-col>
+			<ion-col size="6" class="ion-text-end">
+
+				<ion-button shape="round" size="small" fill="clear" class="p-0 m-0">
+					<ion-icon name="ellipsis-vertical" slot="icon-only" class="font-size-18 grey-color"></ion-icon>
+				
+				 </ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-card>
+</ng-container>
+</ion-content> 

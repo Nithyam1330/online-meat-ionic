@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { CategoriesPage } from './categories.page';
+import { RouterModule, Routes } from '@angular/router';
+import { CategoriesComponent } from './categories.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CategoriesPage
-  }
+    component: CategoriesComponent
+  },
+  {
+    path: 'add-category',
+    loadChildren: () => import('../modify-categories/modify-categories.module').then(m => m.ModifyCategoriesModule)
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class CategoriesPageRoutingModule {}
+export class CategoriesRoutingModule { }

@@ -51,7 +51,7 @@ const routes: Routes = [
       },
       {
         path: 'categories',
-        loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesPageModule)
+        loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesModule)
       },
      
     ]
@@ -69,7 +69,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminModule)
   },
  
 

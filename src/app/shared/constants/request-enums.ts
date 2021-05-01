@@ -76,6 +76,17 @@ export const RequestEnums = {
     path: '/user-details/:id/address/:addressId',
     keys: ['id', 'addressId'],
     values: [],
-  }
-
+  },
+  GET_ALL_CATEGORY: {
+    type: 'GET',
+    path: '/category',
+    keys: [],
+    values: [],
+  },
+  CREATE_CATEGORY: {
+    type: 'POST',
+    path: '/category',
+    keys: [],
+    values: [],
+  },
 };

@@ -101,4 +101,22 @@ export const RequestEnums = {
     keys: ['subCategoryKey', 'status'],
     values: [],
   },
+  GET_SUB_CATEGORY_DETAILS: {
+    type: 'GET',
+    path: '/sub-category/:subCategoryKey',
+    keys: ['subCategoryKey'],
+    values: [],
+  },
+  CREATE_SUB_CATEGORY: {
+    type: 'POST',
+    path: '/sub-category',
+    keys: [],
+    values: [],
+  },
+  UPDATE_SUB_CATEGORY: {
+    type: 'PUT',
+    path: '/sub-category/:subCategoryKey',
+    keys: ['subCategoryKey'],
+    values: [],
+  },
 };

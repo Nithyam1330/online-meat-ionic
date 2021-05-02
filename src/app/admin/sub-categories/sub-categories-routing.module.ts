@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./modify-sub-category/modify-sub-category.module').then(m => m.ModifySubCategoryModule)
   },
   {
-    path: ':id',
+    path: ':subCategoryKey',
     loadChildren: () => import('./modify-sub-category/modify-sub-category.module').then(m => m.ModifySubCategoryModule)
   }
 ];

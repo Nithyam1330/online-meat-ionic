@@ -12,8 +12,8 @@
       <ion-item>
         <ion-label color="medium" position="floating">Categories</ion-label>
         <ion-select name="type" formControlName="categoryKey">
-          <ng-container *ngFor="let status of STATUS">
-            <ion-select-option [value]="status.id">{{status.label}}</ion-select-option>
+          <ng-container *ngFor="let category of categories">
+            <ion-select-option [value]="category.categoryKey">{{category.name}}</ion-select-option>
           </ng-container>
         </ion-select>
       </ion-item>
@@ -53,7 +53,7 @@
         </ion-col>
         <ion-col>
           <div class="ion-text-end">
-            <ion-button (click)="createSubCategory()" color="light" size="small" fill="outline" shape="round"
+            <ion-button (click)="createOrUpdateSubCategory()" color="light" size="small" fill="outline" shape="round"
               [disabled]='subCategoryForm.invalid'>{{subCategoryKey ? 'Update' : 'Submit'}}
               <ion-icon class="p-l-6" name="arrow-forward-circle"></ion-icon>
             </ion-button>

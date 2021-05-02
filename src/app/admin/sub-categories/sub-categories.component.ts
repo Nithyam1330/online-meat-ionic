@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
-import { catchError } from 'rxjs/operators';
 import { RequestEnums } from 'src/app/shared/constants/request-enums';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
@@ -42,12 +41,11 @@ export class SubCategoriesComponent implements OnInit {
           handler: () => {
             // navigate to edit page
             this.router.navigate(['admin', 'sub-categories', subCategory.subCategoryKey]);
-
           }
         }, {
-          text: `Mark as ${subCategory.status === 'Active' ? 'Inactive' : 'Active'}`,
+          text: `Mark as ${subCategory.status === 'ACTIVE' ? 'Inactive' : 'Active'}`,
           icon: 'ellipse',
-          cssClass: `${subCategory.status === 'Active' ? 'red-color' : 'green-color'}`,
+          cssClass: `${subCategory.status === 'ACTIVE' ? 'red-color' : 'green-color'}`,
           handler: () => {
             this.activeOrInActiveConfirmationPopup(subCategory);
           }
@@ -66,7 +64,7 @@ export class SubCategoriesComponent implements OnInit {
   }
 
   public navigateToAddCategories() {
-    this.router.navigate(['admin', 'sub-categories', 'add'])
+    this.router.navigate(['admin', 'sub-categories', 'add']);
   }
 
   private async activeOrInActiveConfirmationPopup(subCategory) {
@@ -99,7 +97,7 @@ export class SubCategoriesComponent implements OnInit {
     await this.loaderService.showLoader();
     RequestEnums.UPDATE_SUB_CATEGORY_STATUS.values = [
       subCategory.subCategoryKey,
-      subCategory.status === 'Active' ? 'Inactive' : 'Active'
+      subCategory.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
     ]
     this.commonRequestService.request(RequestEnums.UPDATE_SUB_CATEGORY_STATUS).subscribe(async res => {
       await this.loaderService.dissmissLoading();
@@ -115,13 +113,13 @@ export class SubCategoriesComponent implements OnInit {
         });
         this.getAllSubCategories();
       }
-    }, catchError(async e => {
+    }, async e => {
       await this.loaderService.dissmissLoading();
       this.toasterService.presentToast({
         message: 'Something went wrong. Please try again',
         color: TOAST_COLOR_ENUMS.DANGER
       });
-    }))
+    })
   }
 
   private async getAllSubCategories() {
@@ -139,13 +137,13 @@ export class SubCategoriesComponent implements OnInit {
           this.subCategories = res.data;
         }
       },
-      catchError(async e => {
+      async e => {
         await this.loaderService.dissmissLoading();
         this.toasterService.presentToast({
           message: 'Something Went wrong.. Please try again',
           color: TOAST_COLOR_ENUMS.DANGER
         });
-      })
+      }
       )
   }
 }

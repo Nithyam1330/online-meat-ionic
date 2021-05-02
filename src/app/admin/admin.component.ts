@@ -18,4 +18,8 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['admin', 'categories']);
   }
 
+  navigateToSubCategories() {
+    this.router.navigate(['admin', 'sub-categories'])
+  }
+
 }

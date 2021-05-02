@@ -89,4 +89,10 @@ export const RequestEnums = {
     keys: [],
     values: [],
   },
+  GET_ALL_SUB_CATEGORY: {
+    type: 'GET',
+    path: '/sub-category',
+    keys: [],
+    values: [],
+  },
 };

@@ -8,19 +8,17 @@
 		</ion-fab-button>
 	</ion-fab>
 	<div class="ion-text-center">
-		<p class="white-color font-size-25">Sub Categories</p>
+		<p class="white-color">Sub Categories</p>
 	</div>
 	<div *ngIf="subCategories.length <= 0" class="ion-text-center error">
 		<ion-label>No Sub Categories</ion-label>
 	</div>
-
-
-	<ng-container>
+	<ng-container *ngIf="subCategories.length > 0">
 		<ion-card *ngFor="let subCategory of subCategories" class="ion-margin each-card p-10">
 			<ion-row class="ion-justify-content-between">
 				<ion-col size="6" class="p-10">
 					<ion-card-subtitle class="p-l-5 font-size-16">
-						<ion-icon name="ellipse font-size-12" [ngClass]="subCategory.status === 'ACTIVE' ? 'green-color' : 'red-color'"></ion-icon>
+						<ion-icon name="ellipse" class="font-size-12" [ngClass]="subCategory.status === 'Active' ? 'green-color' : 'red-color'"></ion-icon>
 						{{subCategory.name | titlecase}}
 					</ion-card-subtitle>
 				</ion-col>

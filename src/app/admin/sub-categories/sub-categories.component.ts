@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
+import { catchError } from 'rxjs/operators';
 import { RequestEnums } from 'src/app/shared/constants/request-enums';
-import { ToasterService } from 'src/app/shared/services/common/toaster/toaster.service';
+import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
+import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 
@@ -18,7 +20,8 @@ export class SubCategoriesComponent implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private toasterService: ToasterService,
-    private commonRequestService: CommonRequestService
+    private commonRequestService: CommonRequestService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -42,9 +45,9 @@ export class SubCategoriesComponent implements OnInit {
 
           }
         }, {
-          text: `${subCategory.status}`,
+          text: `Mark as ${subCategory.status === 'Active' ? 'Inactive' : 'Active'}`,
           icon: 'ellipse',
-          cssClass: `${subCategory.status === 'ACTIVE' ? 'green-color' : 'red-color'}`,
+          cssClass: `${subCategory.status === 'Active' ? 'red-color' : 'green-color'}`,
           handler: () => {
             this.activeOrInActiveConfirmationPopup(subCategory);
           }
@@ -69,7 +72,7 @@ export class SubCategoriesComponent implements OnInit {
   private async activeOrInActiveConfirmationPopup(subCategory) {
     const alert = await this.alertController.create({
       header: 'Confimation !',
-      message: `Are you sure, You want to ${subCategory.status} ${subCategory.name} Sub-Category ?`,
+      message: `Are you sure, You want to mark <strong>${subCategory.name}</strong> Sub-Category as <strong>${subCategory.status === 'Active' ? 'Inactive' : 'Active'} </strong> ?`,
       buttons: [
         {
           text: 'Cancel',
@@ -79,8 +82,9 @@ export class SubCategoriesComponent implements OnInit {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: `${subCategory.status === 'ACTIVE' ? 'Inactive' : 'Active'}`,
+          text: `${subCategory.status === 'Active' ? 'Inactive' : 'Active'}`,
           handler: () => {
+            this.activeInactiveAPI(subCategory);
           }
         }
       ]
@@ -91,20 +95,57 @@ export class SubCategoriesComponent implements OnInit {
     const { role } = await alert.onDidDismiss();
   }
 
-  getAllSubCategories() {
+  private async activeInactiveAPI(subCategory) {
+    await this.loaderService.showLoader();
+    RequestEnums.UPDATE_SUB_CATEGORY_STATUS.values = [
+      subCategory.subCategoryKey,
+      subCategory.status === 'Active' ? 'Inactive' : 'Active'
+    ]
+    this.commonRequestService.request(RequestEnums.UPDATE_SUB_CATEGORY_STATUS).subscribe(async res => {
+      await this.loaderService.dissmissLoading();
+      if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
+        this.toasterService.presentToast({
+          message: res.message,
+          color: TOAST_COLOR_ENUMS.DANGER
+        });
+      } else {
+        this.toasterService.presentToast({
+          message: 'Status Updated Successfully',
+          color: TOAST_COLOR_ENUMS.SUCCESS
+        });
+        this.getAllSubCategories();
+      }
+    }, catchError(async e => {
+      await this.loaderService.dissmissLoading();
+      this.toasterService.presentToast({
+        message: 'Something went wrong. Please try again',
+        color: TOAST_COLOR_ENUMS.DANGER
+      });
+    }))
+  }
+
+  private async getAllSubCategories() {
+    await this.loaderService.showLoader();
     this.commonRequestService
       .request(RequestEnums.GET_ALL_SUB_CATEGORY)
-      .subscribe(res => {
+      .subscribe(async res => {
+        await this.loaderService.dissmissLoading();
         if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
           this.toasterService.presentToast({
             message: res.message,
-            color: 'danger'
+            color: TOAST_COLOR_ENUMS.DANGER
           });
         } else {
           this.subCategories = res.data;
-          console.log(this.subCategories);
         }
       },
+      catchError(async e => {
+        await this.loaderService.dissmissLoading();
+        this.toasterService.presentToast({
+          message: 'Something Went wrong.. Please try again',
+          color: TOAST_COLOR_ENUMS.DANGER
+        });
+      })
       )
   }
 }

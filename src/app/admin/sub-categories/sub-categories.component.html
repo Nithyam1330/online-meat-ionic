@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true">
+	<div class="ion-padding">
+		<app-back-navigation-header></app-back-navigation-header>
+	</div>
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="navigateToAddCategories()">
+		<ion-fab-button size="small">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+	<div class="ion-text-center">
+		<p class="white-color">Sub Categories</p>
+	</div>
+	<div *ngIf="subCategories.length <= 0" class="ion-text-center error">
+		<ion-label>No Sub Categories</ion-label>
+	</div>
+	<ng-container *ngIf="subCategories.length > 0">
+		<ion-card *ngFor="let subCategory of subCategories" class="ion-margin each-card p-10">
+			<ion-row class="ion-justify-content-between">
+				<ion-col size="6" class="p-10">
+					<ion-card-subtitle class="p-l-5 font-size-16">
+						<ion-icon name="ellipse" class="font-size-12" [ngClass]="subCategory.status === 'ACTIVE' ? 'green-color' : 'red-color'"></ion-icon>
+						{{subCategory.name | titlecase}}
+					</ion-card-subtitle>
+				</ion-col>
+				<ion-col size="6" class="ion-text-end">
+					<ion-button shape="round" size="small" fill="clear" class="p-0 m-0" (click)="openActions(subCategory)">
+						<ion-icon name="ellipsis-vertical" slot="icon-only" class="font-size-18 grey-color"></ion-icon>
+
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		</ion-card>
+	</ng-container>
+</ion-content>

@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <app-back-navigation-header></app-back-navigation-header>
+  </div>
+
+  <div class="ion-text-center">
+    <p class="white-color">{{categoryKey ? 'Update' : 'Add'}} Category</p>
+  </div>
+
+  <form [formGroup]="categoryForm">
+    <div class="h-px-90">
+      <ion-item>
+        <ion-label position="floating">Category Name</ion-label>
+        <ion-input formControlName="name" type="text" placeholder="Category Name"></ion-input>
+      </ion-item>
+      <ion-text color="danger" class="f14" *ngIf="isValidField(categoryForm, 'name')">
+        {{ getErrorMessage(categoryForm, validationMessages, 'name') }}
+      </ion-text>
+    </div>
+    <div class="h-px-90">
+      <ion-item>
+        <ion-label color="medium" position="floating">Status</ion-label>
+        <ion-select name="status" formControlName="status">
+          <ng-container *ngFor="let status of STATUS">
+            <ion-select-option [value]="status.id">{{status.label}}</ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger" class="f14" *ngIf="isValidField(categoryForm, 'status')">
+        {{ getErrorMessage(categoryForm, validationMessages, 'status') }}
+      </ion-text>
+    </div>
+
+    <ion-grid>
+      <ion-row class="ion-justify-content-between">
+        <ion-col>
+          <ion-button (click)="cancel()" color="light" size="small" fill="outline" shape="round" >
+            <ion-icon class="p-l-6" name="arrow-back-circle"></ion-icon>Cancel
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-end">
+            <ion-button (click)="onSubmit()" color="light" size="small" fill="outline" shape="round"
+              [disabled]='categoryForm.invalid'>{{categoryKey ? 'Update' : 'Submit'}}
+              <ion-icon class="p-l-6" name="arrow-forward-circle"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

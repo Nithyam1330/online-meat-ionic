@@ -76,6 +76,65 @@ export const RequestEnums = {
     path: '/user-details/:id/address/:addressId',
     keys: ['id', 'addressId'],
     values: [],
-  }
-
-};
+  },
+  GET_ALL_CATEGORY: {
+    type: 'GET',
+    path: '/category',
+    keys: [],
+    values: [],
+  },
+  CREATE_CATEGORY: {
+    type: 'POST',
+    path: '/category',
+    keys: [],
+    values: [],
+  },
+  GET_ALL_SUB_CATEGORY: {
+    type: 'GET',
+    path: '/sub-category',
+    keys: [],
+    values: [],
+  },
+  UPDATE_SUB_CATEGORY_STATUS: {
+    type: 'PUT',
+    path: '/sub-category/:subCategoryKey/:status',
+    keys: ['subCategoryKey', 'status'],
+    values: [],
+  },
+  GET_SUB_CATEGORY_DETAILS: {
+    type: 'GET',
+    path: '/sub-category/:subCategoryKey',
+    keys: ['subCategoryKey'],
+    values: [],
+  },
+  CREATE_SUB_CATEGORY: {
+    type: 'POST',
+    path: '/sub-category',
+    keys: [],
+    values: [],
+  },
+  UPDATE_SUB_CATEGORY: {
+    type: 'PUT',
+    path: '/sub-category/:subCategoryKey',
+    keys: ['subCategoryKey'],
+    values: [],
+  },
+  UPDATE_STATUS: {
+    type: 'PUT',
+    path: '/category/:categoryKey/:status',
+    keys: ['categoryKey','status'],
+    values: [],
+  },
+  UPDATE_CATEGORY_DETAILS: {
+    type: 'PUT',
+    path: '/category/:categoryKey',
+    keys:['categoryKey'],
+    values: [],
+  },
+  GET_CATEGORY_BY_KEY: {
+    type: 'GET',
+    path: '/category/:categoryKey',
+    keys: ['categoryKey'],
+    values: [],
+  },
+}

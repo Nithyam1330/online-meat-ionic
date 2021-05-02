@@ -45,10 +45,7 @@ export class ModifySubCategoryComponent extends BaseClass implements OnInit {
     this.initializeForm();
     this.getAllCategories();
   }
-  ionViewDidEnter() {
-   
-  }
-
+  
   private async getAllCategories() {
     await this.loaderService.showLoader();
     this.commonRequestService.request(RequestEnums.GET_ALL_CATEGORY).subscribe(async res => {

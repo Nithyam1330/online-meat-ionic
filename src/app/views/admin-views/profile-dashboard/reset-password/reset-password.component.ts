@@ -87,7 +87,6 @@ export class ResetPasswordComponent extends BaseClass implements OnInit {
    * @param event Checkbox prebuilt event
    */
   public checkboxChange(event) {
-    console.log(event);
     this.typeValue = event.target.checked ? 'text' : 'password';
   }
 }

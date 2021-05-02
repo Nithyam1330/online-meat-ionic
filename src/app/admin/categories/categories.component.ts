@@ -56,7 +56,6 @@ export class CategoriesComponent implements OnInit {
           icon: 'close',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         }]
     });
@@ -76,7 +75,6 @@ export class CategoriesComponent implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: `${category.status === 'Active' ? 'Inactive' : 'Active'}`,
@@ -94,7 +92,6 @@ export class CategoriesComponent implements OnInit {
 
 
   private async activeInactiveAPI(Category) {
-    console.log("category:"+Category);
     await this.loaderService.showLoader();
     RequestEnums.UPDATE_STATUS.values = [
       Category.categoryKey,

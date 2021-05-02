@@ -7,18 +7,26 @@ import { LoaderService } from 'src/app/shared/services/common/loader/loader.serv
 import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/common/toaster/toaster.service';
 import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
+import { BaseClass } from 'src/app/shared/services/common/baseClass';
 
 @Component({
   selector: 'app-modify-sub-category',
   templateUrl: './modify-sub-category.component.html',
   styleUrls: ['./modify-sub-category.component.scss'],
 })
-export class ModifySubCategoryComponent implements OnInit {
+export class ModifySubCategoryComponent extends BaseClass implements OnInit {
 
   subCategoryKey: any;
   subCategoryForm: FormGroup;
   STATUS = STATUS;
   categories = [];
+  validationMessages = {
+    name: [
+      { type: 'required', message: 'Please enter sub category name' },
+    ],
+    status: [{ type: 'required', message: 'Please select status' }],
+    categoryKey: [{ type: 'required', message: 'Please select category' }],
+  };
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -27,6 +35,7 @@ export class ModifySubCategoryComponent implements OnInit {
     private toasterService: ToasterService,
     private router: Router
   ) {
+    super();
     this.subCategoryKey = this.activatedRoute.snapshot.params.subCategoryKey;
   }
 
@@ -165,6 +174,6 @@ export class ModifySubCategoryComponent implements OnInit {
   }
 
   public cancel() {
-
+    this.router.navigate(['admin', 'sub-categories']);
   }
 }

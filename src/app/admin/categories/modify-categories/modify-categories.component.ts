@@ -8,18 +8,24 @@ import { RequestEnums } from '../../../shared/constants/request-enums';
 import Utils from '../../../shared/services/common/utils';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BaseClass } from 'src/app/shared/services/common/baseClass';
 
 @Component({
   selector: 'app-modify-categories',
   templateUrl: './modify-categories.component.html',
   styleUrls: ['./modify-categories.component.scss'],
 })
-export class ModifyCategoriesComponent implements OnInit {
+export class ModifyCategoriesComponent extends BaseClass implements OnInit {
   categoryForm: FormGroup;
   STATUS = STATUS;
   categoryKey: any;
-  categories: [];
-  
+  categories: any;
+  validationMessages = {
+    name: [
+      { type: 'required', message: 'Please enter Category name' },
+    ],
+    status: [{ type: 'required', message: 'Please select status' }],
+  };
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -28,14 +34,13 @@ export class ModifyCategoriesComponent implements OnInit {
     private toasterService: ToasterService,
     private router: Router
   ) { 
+    super();
     this.categoryKey = this.activatedRoute.snapshot.params.id;
-    console.log(this.activatedRoute.snapshot.params.id);
-    console.log(this.categoryKey);
   }
 
   ngOnInit() {
     this.initializeForm();
-    this.getAllCategories();
+    this.getCategoryDetailsByKey();
   }
 
   private initializeForm() {
@@ -44,32 +49,7 @@ export class ModifyCategoriesComponent implements OnInit {
       status: ['', Validators.compose([Validators.required])],    
     });
   }
-  
-  private async getAllCategories() {
-    await this.loaderService.showLoader();
-    this.commonRequestService.request(RequestEnums.GET_ALL_CATEGORY).subscribe(async res => {
-      await this.loaderService.dissmissLoading();
-      if (Utils.isValidInput(res.errorType) || res.statusCode !== 200) {
-        this.toasterService.presentToast({
-          message: res.message,
-          color: TOAST_COLOR_ENUMS.DANGER
-        });
-      } else {
-        this.categories = res.data;
-        console.log(this.categoryKey)
-        if (Utils.isValidInput(this.categoryKey)) {
-          this.getCategoryDetailsByKey();
-        }
-      }
-    },
-    async e => {
-      await this.loaderService.dissmissLoading();
-      this.toasterService.presentToast({
-        message: 'Something Went wrong.. Please try again',
-        color: TOAST_COLOR_ENUMS.DANGER
-      });
-    })
-  }
+
   private async getCategoryDetailsByKey() {
     await this.loaderService.showLoader();
     RequestEnums.GET_CATEGORY_BY_KEY.values = [
@@ -105,10 +85,12 @@ export class ModifyCategoriesComponent implements OnInit {
       }
     }
   }
-   public createCategory() {
+  private async createCategory() {
+    await this.loaderService.showLoader();
     this.commonRequestService
       .request(RequestEnums.CREATE_CATEGORY, this.categoryForm.value)
-      .subscribe(res => {
+      .subscribe(async res => {
+        await this.loaderService.dissmissLoading();
         if (Utils.isValidInput(res.errorType) || !Utils.isValidInput(res.data) || res.statusCode !== 200) {
           this.toasterService.presentToast({
             message: res.message,
@@ -153,6 +135,6 @@ export class ModifyCategoriesComponent implements OnInit {
   }
 
   public cancel() {
-
+    this.router.navigate(['admin', 'categories']);
   }
 }

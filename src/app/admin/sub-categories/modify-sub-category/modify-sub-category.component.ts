@@ -8,6 +8,7 @@ import { ToasterService, TOAST_COLOR_ENUMS } from 'src/app/shared/services/commo
 import Utils from 'src/app/shared/services/common/utils';
 import { CommonRequestService } from 'src/app/shared/services/http/common-request.service';
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
+import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
 
 @Component({
   selector: 'app-modify-sub-category',
@@ -23,6 +24,7 @@ export class ModifySubCategoryComponent extends BaseClass implements OnInit {
   validationMessages = {
     name: [
       { type: 'required', message: 'Please enter sub category name' },
+      { type: 'pattern', message: 'Allowed Only Alphabets' },
     ],
     status: [{ type: 'required', message: 'Please select status' }],
     categoryKey: [{ type: 'required', message: 'Please select category' }],
@@ -102,7 +104,10 @@ export class ModifySubCategoryComponent extends BaseClass implements OnInit {
 
   private initializeForm() {
     this.subCategoryForm = this.formBuilder.group({
-      name: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern(VALIDATION_PATTERNS.NAME),
+      ]),],
       status: ['', Validators.compose([Validators.required])],
       categoryKey: ['', Validators.compose([Validators.required])]      
     });

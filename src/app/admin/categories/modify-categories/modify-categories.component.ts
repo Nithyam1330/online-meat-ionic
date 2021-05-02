@@ -9,6 +9,7 @@ import Utils from '../../../shared/services/common/utils';
 import { LoaderService } from 'src/app/shared/services/common/loader/loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseClass } from 'src/app/shared/services/common/baseClass';
+import { VALIDATION_PATTERNS } from 'src/app/shared/constants/validation-patterns';
 
 @Component({
   selector: 'app-modify-categories',
@@ -23,6 +24,7 @@ export class ModifyCategoriesComponent extends BaseClass implements OnInit {
   validationMessages = {
     name: [
       { type: 'required', message: 'Please enter Category name' },
+      { type: 'pattern', message: 'Allowed Only Alphabets' },
     ],
     status: [{ type: 'required', message: 'Please select status' }],
   };
@@ -45,7 +47,10 @@ export class ModifyCategoriesComponent extends BaseClass implements OnInit {
 
   private initializeForm() {
     this.categoryForm = this.formBuilder.group({
-      name: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern(VALIDATION_PATTERNS.NAME),
+      ]),],
       status: ['', Validators.compose([Validators.required])],    
     });
   }

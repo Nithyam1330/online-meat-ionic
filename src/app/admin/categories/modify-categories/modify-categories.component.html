@@ -40,7 +40,7 @@
         </ion-col>
         <ion-col>
           <div class="ion-text-end">
-            <ion-button (click)="createAddress()" color="light" size="small" fill="outline" shape="round"
+            <ion-button (click)="onSubmit()" color="light" size="small" fill="outline" shape="round"
               [disabled]='categoryForm.invalid'>{{categoryKey ? 'Update' : 'Submit'}}
               <ion-icon class="p-l-6" name="arrow-forward-circle"></ion-icon>
             </ion-button>
